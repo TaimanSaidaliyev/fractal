@@ -1,0 +1,63 @@
+{% extends 'base_type/base_version_2.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% block content %}
+<div class="row me-0 h-100">
+    <div class="col col-md-2 border border-top-0 border-left-0 border-bottom-0 border-right-1 pe-0" style="background: #FAFBFC;">
+        {% show_proj_man_sidebar request page_type category %}
+    </div>
+    <div class="col col-md-10 p-5">
+		<div class="row g-6 g-xl-9 p-10 pt-0">
+			<div class="d-flex flex-wrap justify-content-between">
+				<div class="d-flex align-items-center flex-wrap">
+					<h3 class="card-title align-items-start flex-column">
+						<span class="card-label fw-bolder fs-3 mb-1">Список проектов</span><br>
+					</h3>
+				</div>
+				<div class="float-end">
+					<a href="{% url 'project_add' %}" class="btn btn-primary btn-sm">Создать проект</a>
+				</div>
+			</div>
+			<div class="ms-1">
+				<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+					<li class="nav-item">
+						<a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">Открытые</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2">Удаленные</a>
+					</li>
+				</ul>
+
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+						{% show_projects_cards request 1 %}
+					</div>
+					<div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+						{% show_projects_cards request 0 %}
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
+{% endblock %}

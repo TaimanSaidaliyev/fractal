@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% load static %}
+{% load photoalbum_tags %}
+{% block content %}
+<div class="p-10" xmlns="http://www.w3.org/1999/html">
+    {% if page_type == 'photoalbum_add'%}
+    <span class="text-primary fw-bolder mb-5">
+        <a href="{% url 'photoalbum_list' %}">< Главная: Фотоальбом</a>
+    </span>
+    <h1>Добавить альбом:</h1>
+    <form action="{% url 'photoalbum_add'%}" enctype="multipart/form-data" method="POST">
+    {% elif page_type == 'photoalbum_update' %}
+    <span class="text-primary fw-bolder mb-5">
+        <a href="{% url 'photoalbum_items' photoalbum.pk %}">< Фотоальбом: {{photoalbum.title}}</a>
+    </span>
+    <h1>Редактировать альбом: <a href="{% url 'photoalbum_items' photoalbum.pk %}" class="text-warning text-hover-primary">#{{photoalbum.pk}} - {{ photoalbum.title }}</a></h1>
+    <form action="{% url 'photoalbum_update' photoalbum.pk %}" enctype="multipart/form-data" method="POST">
+    {% endif %}
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}" class="mt-5">Название</label>
+                {{ form.title }}
+                <div class="invalid-feedback">
+                    {{ form.title.errors }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}" class="mt-5">Категория</label>
+                        {{ form.category }}
+                        <div class="invalid-feedback">
+                            {{ form.category.errors }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="{{ form.event_at.id_for_label }}" class="mt-5">Дата встречи</label>
+                        {{ form.event_at }}
+                        <div class="invalid-feedback">
+                            {{ form.event_at.errors }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.event_description.id_for_label }}" class="mt-5">Описание</label>
+                {{ form.event_description }}
+                <div class="invalid-feedback">
+                    {{ form.event_description.errors }}
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="{{ form.image.id_for_label }}" class="mt-5">Обложка</label>
+                <br>
+                <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url({% static '/assets/media/svg/avatars/blank.svg' %})">
+                    {% if photoalbum.image %}
+                    <div class="image-input-wrapper w-250px h-250px" style="background-image: url('{{photoalbum.image.url}}')"></div>
+                    {% else %}
+                    <div class="image-input-wrapper w-250px h-250px"></div>
+                    {% endif %}
+                    <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+                            data-kt-image-input-action="change"
+                            data-bs-toggle="tooltip"
+                            data-bs-dismiss="click"
+                        title="Change avatar">
+                        <i class="bi bi-pencil-fill fs-7"></i>
+                        <input type="file" name="photoalbum_image" accept=".png, .jpg, .jpeg" />
+                        <input type="hidden" name="avatar_remove" />
+                    </label>
+                    <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+                            data-kt-image-input-action="cancel"
+                            data-bs-toggle="tooltip"
+                            data-bs-dismiss="click"
+                            title="Cancel avatar">
+                        <i class="bi bi-x fs-2"></i>
+                    </span>
+                    <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+                            data-kt-image-input-action="remove"
+                            data-bs-toggle="tooltip"
+                            data-bs-dismiss="click"
+                            title="Remove avatar">
+                        <i class="bi bi-x fs-2"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-sm btn-primary mt-5">Сохранить</button>
+    <a href="{% url 'photoalbum_list' %}" class="btn btn-sm btn-light mt-5">Отменить</a>
+    </form>
+</div>
+{% endblock %}

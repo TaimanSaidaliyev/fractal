@@ -1,0 +1,56 @@
+{% load project_tags %}
+{% load common_user_list %}
+<div class="table-responsive">
+    <!--begin::Table-->
+    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+        <!--begin::Table head-->
+        <thead>
+            <tr class="fw-bolder text-muted">
+                <th class="min-w-200px">Проект</th>
+                <th class="min-w-150px">Статус</th>
+                <th class="min-w-150px">Руководитель проекта</th>
+                <th class="min-w-100px">Срок</th>
+                <th class="min-w-150px">Участники</th>
+            </tr>
+        </thead>
+        <!--end::Table head-->
+        <!--begin::Table body-->
+        <tbody>
+        {% for projects in projects %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+					<a href="{% url 'projects_tasks_list' projects.pk %}">
+                        <div class="symbol symbol-45px me-5">
+                            {% if projects.photo %}
+							<img class="mw-75px mw-lg-75px" src="{{projects.photo.url}}" alt="image">
+							{% else %}
+							<span class="symbol-label fs-3 bg-light-warning text-warning">{{projects.title|upfirstletter}}</span>
+							{% endif %}
+                        </div>
+                        <div class="d-flex justify-content-start flex-column">
+                            <a href="{% url 'projects_tasks_list' projects.pk %}" class="text-dark fw-bolder text-hover-primary fs-6">{{projects.title}}</a>
+                            <span class="text-muted fw-bold text-muted d-block fs-7 mt-1">{% autoescape off %}{{projects.description|truncatewords:6|striptags}}{% endautoescape %}</span>
+                        </div>
+                    </div>
+					</a>
+                </td>
+                <td>
+                    <span class="{{projects.status.css_color}} fw-bolder me-auto px-4 py-3">{{projects.status}}</span>
+                </td>
+                <td class="text-start">
+                    {% show_user_small_balls_list request projects.managers.all 5 %}
+                </td>
+                <td>
+                    <span class="text fs-7">{{projects.edate}}</span>
+                </td>
+                <td>
+                    {% show_user_small_balls_list request projects.participants.all 5 %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <!--end::Table body-->
+    </table>
+    <!--end::Table-->
+</div>

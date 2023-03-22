@@ -1,0 +1,21 @@
+<ul class="nav flex-wrap border-transparent fw-bold">
+    <li class="nav-item my-1">
+        {% if category_id %}
+            <a class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 mx-1 text-uppercase" href="{% url 'photoalbum_list' %}">Все</a>
+        {% else %}
+            <a class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 mx-1 text-uppercase active" href="{% url 'photoalbum_list' %}">Все</a>
+        {% endif %}
+    </li>
+    {% for category in categories %}
+    {% if category_id == category.pk %}
+    <li class="nav-item my-1">
+        <a class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 mx-1 text-uppercase active" href="{% url 'photoalbum_by_category' category.pk %}">{{category.title}}</a>
+    </li>
+    {% else %}
+    <li class="nav-item my-1">
+        <a class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 mx-1 text-uppercase" href="{% url 'photoalbum_by_category' category.pk %}">{{category.title}}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+

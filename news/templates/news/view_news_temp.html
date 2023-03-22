@@ -1,0 +1,341 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ news_item.title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+  {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load news_tags %}
+{% load sidebar_last_news %}
+{% load news_widgets %}
+{% load alerts %}
+{% load project_tags %}
+
+{% block content %}
+  {% if news_item.is_published == True %}
+  <!--begin::Body-->
+  <div class="card-body p-lg-20 pb-lg-0">
+      <!--begin::Layout-->
+      {% if added_news_success or added_comment_success %}
+        {% show_alerts request.resolver_match.url_name %}
+      {% endif %}
+      <div class="d-flex flex-column flex-xl-row">
+          <!--begin::Content-->
+          <div class="flex-lg-row-fluid me-xl-15">
+              <div class="mb-17">
+                  <!--begin::Wrapper-->
+                  <div class="mb-8">
+                      <!--begin::Info-->
+                      <div class="d-flex flex-wrap mb-6">
+                          <!--begin::Item-->
+                          <div class="me-9 my-1">
+                              <!--begin::Icon-->
+                              <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                              <span class="svg-icon svg-icon-primary svg-icon-2 me-1">
+                                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                      <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                      <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                      <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                  </svg>
+                              </span>
+                              <!--end::Svg Icon-->
+                              <!--end::Icon-->
+                              <!--begin::Label-->
+                              <span class="fw-bold text-gray-400">{{ news_item.created_at|date:"d.m.Y H:i" }}</span>
+                              <!--end::Label-->
+                          </div>
+                          <!--end::Item-->
+                          <!--begin::Item-->
+                          <div class="me-9 my-1">
+                              <!--begin::Icon-->
+                              <!--SVG file not found: icons/duotune/finance/fin006.svgFolder.svg-->
+                              <!--end::Icon-->
+                              <!--begin::Label-->
+                              <span class="fw-bold text-gray-400">Категория: {{news_item.category.title}}</span>
+                              <!--begin::Label-->
+                          </div>
+                          <!--end::Item-->
+                          <!--begin::Item-->
+                          <div class="my-1">
+                              <!--begin::Icon-->
+                              <!--begin::Svg Icon | path: icons/duotune/communication/com003.svg-->
+                              <i class="svg-icon svg-icon-primary svg-icon-2 me-1 fonticon-view"></i>
+                              <!--end::Svg Icon-->
+                              <!--end::Icon-->
+                              <!--begin::Label-->
+                              <span class="fw-bold text-gray-400">{{ news_item.views }} просмотров</span>
+                              <!--end::Label-->
+                          </div>
+                          <!--end::Item-->
+                      </div>
+                      <!--end::Info-->
+                      <!--begin::Title-->
+                      <a href="#" class="text-dark text-hover-primary fs-2 fw-bold">{{news_item.title}}
+                      <span class="fw-bold text-muted fs-5 ps-1">5 минут на чтение</span></a>
+
+                      <!--end::Title-->
+                      <!--begin::Container-->
+                      <div class="overlay mt-8">
+                          <!--begin::Image-->
+                          {% if news_item.photo %}
+                          <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-350px" style="background-image:url({{news_item.photo.url}})"></div>
+                          {% else %}
+                          <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-350px" style="background-image:url(https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/1600x800/img-1.jpg)"></div>
+                          {% endif %}
+                          <!--end::Image-->
+                      </div>
+                      <!--end::Container-->
+                  </div>
+                  <!--end::Wrapper-->
+                  <!--begin::Description-->
+                  <div class="fs-5 fw-semibold text-gray-600">
+                      <!--begin::Text-->
+                      <p class="mb-8">
+                        {% autoescape off %}{{news_item.content}}{% endautoescape %}
+                      </p>
+                      <!--end::Text-->
+                  </div>
+                  <ul class="nav py-3">
+                    <!--begin::Item-->
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-sm btn-color-primary btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1">
+                        <i class="bi bi-chat-square fs-2 me-1"></i>Комметарии: {{ news_item.comments_news.all.count }}</a>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="nav-item">
+                        <form action="{% url 'news_like' news_item.pk user.pk %}" id="NewsLike" method="POST">
+                            {% if is_liked == 'Yes'%}
+                            <button type="submit" class="nav-link btn btn-sm btn-color-danger btn-active-color-danger fw-bold px-4 me-1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="Вы уже лайкнули эту новость">
+                            <i class="bi bi-heart fs-2 me-1"></i>{{news_item.likes_new.all.count}} Нравится</a></button>
+                            {% else %}
+                            <button type="submit" class="nav-link btn btn-sm btn-color-primary btn-active-color-primary fw-bold px-4 me-1">
+                            <i class="bi bi-heart fs-2 me-1"></i>{{news_item.likes_new.all.count}} Нравится</a></button>
+                            {% endif %}
+                            {% csrf_token %}
+                        </form>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="nav-item">
+                        <form action="{% url 'news_save' news_item.pk user.pk %}" id="NewsSave" method="POST">
+                            {% if is_saved == 'Yes'%}
+                            <button type="submit" class="nav-link btn btn-sm btn-color-danger btn-active-color-danger fw-bold px-4 me-1">
+                            <i class="bi bi-bookmark fs-2 me-1"></i>{{news_item.saved_news.all.count}} Сохранено</button>
+                            {% else %}
+                            <button type="submit" class="nav-link btn btn-sm btn-color-primary btn-active-color-primary fw-bold px-4 me-1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="top" data-bs-original-title="Вы уже сохранили эту новость">
+                            <i class="bi bi-bookmark fs-2 me-1"></i>{{news_item.saved_news.all.count}} Сохранено</button>
+                            {% endif %}
+
+                            {% csrf_token %}
+                        </form>
+                    </li>
+                    <!--end::Item-->
+                  </ul>
+                  <!--end::Description-->
+                  <!--begin::Block-->
+                  <div class="d-flex align-items-center border-1 border-dashed card-rounded p-5 p-lg-10 mb-14">
+                      <!--begin::Section-->
+                      <div class="text-center flex-shrink-0 me-7 me-lg-13">
+                          <!--begin::Avatar-->
+                          <div class="symbol symbol-70px symbol-circle mb-2">
+                              {% if news_item.author.profile.photo %}
+                              <img src="{{news_item.author.profile.photo.url}}" class="" alt="">
+                              {% else %}
+                              <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{news_item.author.first_name|upfirstletter}}</span>
+                              {% endif %}
+                          </div>
+                          <!--end::Avatar-->
+                          <!--begin::Info-->
+                          <div class="mb-0">
+                              <a href="{% url 'profile_view' news_item.author.pk %}" class="text-gray-700 fw-bold text-hover-primary">{{news_item.author.first_name}} {{news_item.author.last_name}}</a>
+                              <span class="text-gray-400 fs-7 fw-semibold d-block mt-1">{{news_item.author.username}}</span>
+                          </div>
+                          <!--end::Info-->
+                      </div>
+                      <!--end::Section-->
+                      <!--begin::Text-->
+                      <div class="mb-0 fs-6">
+                          <div class="text-muted fw-semibold lh-lg mb-2">«Если кто-то причинил тебе зло, не мсти. Сядь на берегу реки, и вскоре ты увидишь, как мимо тебя проплывает труп твоего врага». «Не так уж сложно изменить общество – сложно изменить себя». Лао-цзы</div>
+                          <a href="{% url 'profile_view' news_item.author.pk %}" class="fw-semibold link-primary">Профиль автора</a>
+                      </div>
+                      <!--end::Text-->
+                  </div>
+                  <!--end::Block-->
+              </div>
+              <!--begin::Comments-->
+              <div class="mb-17">
+                  <h4 class="text-dark mb-7">Комметарии: {{ news_item.comments_news.all.count }}</h4>
+                  <div class="d-flex align-items-center">
+                    <!--begin::Author-->
+                    <div class="symbol symbol-35px me-3">
+                        {% if user.profile.photo %}
+                        <img src="{{user.profile.photo.url}}" alt="">
+                        {% else %}
+                        <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{user.first_name|upfirstletter}}</span>
+                        {% endif %}
+                    </div>
+                    <!--end::Author-->
+                    <!--begin::Input group-->
+                    <div class="position-relative w-100">
+                        <!--begin::Input-->
+                        <form action="" id="add_form" method="POST">
+                            {% csrf_token %}
+                            {{form.content}}
+                        </form>
+                        <!--end::Input-->
+                    </div>
+                      <!--end::Input group-->
+                  </div>
+                  <div class="collapse show" id="kt_social_feeds_comments_1">
+                    <!--begin::Comment-->
+                    {% for item in news_item.comments_news.all %}
+                    <div class="d-flex pt-6">
+                        <!--begin::Avatar-->
+                        <div class="symbol symbol-45px me-5">
+                            {% if item.author.profile.photo %}
+                            <img src="{{item.author.profile.photo.url}}" alt="">
+                            {% else %}
+                            <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{item.author.first_name|upfirstletter}}</span>
+                            {% endif %}
+                        </div>
+                        <!--end::Avatar-->
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column flex-row-fluid">
+                            <!--begin::Info-->
+                            <div class="d-flex align-items-center flex-wrap mb-0">
+                                <!--begin::Name-->
+                                <a href="{% url 'profile_view' item.author.pk %}" class="text-gray-800 text-hover-primary fw-bold me-6">{{item.author.first_name}} {{item.author.last_name}}</a>
+                                <!--end::Name-->
+                                <!--begin::Date-->
+                                <span class="text-gray-400 fw-semibold fs-7 me-5">{{item.create_date}}</span>
+                                <span class="text-danger fw-semibold fs-7 me-5"><a href="{% url 'delete_comments' item.id %} ">Удалить</a></span>
+                                <!--end::Date-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Text-->
+                            <span class="text-gray-800 fs-7 fw-normal pt-1">{{item.content}}</span>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    {% endfor %}
+                    <!--end::Comment-->
+                  </div>
+              </div>
+              <!--end::Comments-->
+          </div>
+          <!--end::Content-->
+          <!--begin::Sidebar-->
+          <div class="flex-column flex-lg-row-auto w-100 w-xl-300px mb-10">
+              <!--begin::Search blog-->
+              <div class="mb-16">
+                  <h4 class="text-dark mb-7">Действия</h4>
+                  <a href="{% url 'update_news' news_item.id %}">
+                    <button class="btn btn-primary">Редактировать</button>
+                  </a>
+
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_2">Удалить</button>
+
+                  <div class="modal fade" tabindex="-1" id="kt_modal_scrollable_2">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Удалить новость?</h5>
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <span class="svg-icon svg-icon-2x"></span>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+                                <div class="modal-body">
+                                    <p>Удаление записи приведет к безвозратной потери этой новости, что не подлежит восстановлению</p>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+                                    <a href="{% url 'delete_new' news_item.id %}">
+                                    <button type="button" class="btn danger-primary">Удалить</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              <!--end::Search blog-->
+              <!--begin::Search blog-->
+              <div class="mb-16">
+                  <h4 class="text-dark mb-7">Поиск</h4>
+                  <!--begin::Input group-->
+                  <div class="position-relative">
+                      <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                      <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect>
+                              <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor"></path>
+                          </svg>
+                      </span>
+                      <!--end::Svg Icon-->
+                      <input type="text" class="form-control form-control-solid ps-10" name="search" value="" placeholder="Поиск...">
+                  </div>
+                  <!--end::Input group-->
+              </div>
+              <!--end::Search blog-->
+              <!--begin::Catigories-->
+              <div class="mb-16">
+                  <h4 class="text-dark mb-7">Категории</h4>
+                  {% show_sidebar_categories %}
+              </div>
+              <!--end::Catigories-->
+
+              <!--begin::Recent posts-->
+              <div class="m-0">
+                  <h4 class="text-dark mb-7">Последние новости</h4>
+                  {% show_sidebar_news %}
+              </div>
+              <!--end::Recent posts-->
+          </div>
+          <!--end::Sidebar-->
+      </div>
+      <!--end::Layout-->
+      <!--begin::Section-->
+      <div class="mb-17">
+          <!--begin::Content-->
+          <div class="d-flex flex-stack mb-5">
+              <!--begin::Title-->
+              <h3 class="text-dark">Часто просматриваемые</h3>
+              <!--end::Title-->
+              <!--begin::Link-->
+              <a href="{% url 'all_news' %}" class="fs-6 fw-semibold link-primary">Все новости</a>
+              <!--end::Link-->
+          </div>
+          <!--end::Content-->
+          <!--begin::Separator-->
+          <div class="separator separator-dashed mb-9"></div>
+          <!--end::Separator-->
+          <!--begin::Row-->
+          {% show_topnews_3 %}
+          <!--end::Row-->
+      </div>
+      <!--end::Section-->
+  </div>
+  <!--end::Body-->
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% load static %}
+{% load photoalbum_tags %}
+{% block content %}
+<div class="p-10">
+    <div class="row">
+        <span class="text-primary fw-bolder mb-5">
+            <a href="{% url 'photoalbum_list' %}">< Главная: Фотоальбом</a>
+        </span>
+        {% show_photoalbum_items_header photoalbum.pk %}
+        {% for image in photoalbum_items %}
+            {% show_photoalbum_item image.pk %}
+        {% empty %}
+            Фотоальбом пустой
+        {% endfor %}
+    </div>
+    <script src="{% static 'assets/plugins/custom/fslightbox/fslightbox.bundle.js' %}"></script>
+</div>
+{% endblock %}

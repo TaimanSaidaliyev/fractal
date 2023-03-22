@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<div class="card-body p-lg-10">
+    {% if form_type == 'add'%}
+    <h1>Создать задачу</h1>
+    <form action="{% url 'projects_task_add' project.pk %}" method="post" enctype="multipart/form-data">
+
+    {% elif form_type == 'add_sub_task'%}
+    <h1>Создать подзадачу <a href="{% url 'projects_task_detail' task.pk %}" class="text-warning text-hover-primary">#{{task.pk}} - {{task}}</a></h1>
+    <form action="{% url 'projects_sub_task_add' project.pk task.pk %}" method="post" enctype="multipart/form-data">
+
+    {% elif form_type == 'add_task'%}
+    <h1>Создать задачу</h1>
+    <form action="{% url 'task_add' %}" method="post" enctype="multipart/form-data">
+
+    {% elif form_type == 'update' %}
+    <h1>Редактирование задачи: <a href="{% url 'projects_task_detail' task.pk%}" class="text-warning text-hover-primary">#{{task.pk}} - {{task}}</a></h1>
+    <form action="{% url 'projects_task_update' task.pk %}" method="post" enctype="multipart/form-data">
+
+        {% elif form_type == 'copy_task' %}
+        <h1>Копирование задачи: <a href="{% url 'projects_task_detail' task.pk  %}" class="text-warning text-hover-primary">#{{task.pk}} - {{task}}</a></h1>
+        <form action="{% url 'projects_task_add' project.pk %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+        {% csrf_token %}
+        {{form.media}}
+        <div class="d-flex flex-column flex-xl-row">
+            <div class="flex-lg-row-fluid me-xl-15">
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}" class="mt-5">Название</label>
+                    {{ form.title }}
+                    <div class="invalid-feedback">
+                        {{ form.title.errors }}
+                    </div>
+                </div>
+                {% if form_type == 'add_sub_task' %}
+                <div class="form-group">
+                    <label class="mt-5">Родительская задача</label>
+                    <select name="parent" class="form-select" id="id_parent" disabled>
+                      <option value="{{task.pk}}" selected="">{{task.title}}</option>
+                    </select>
+                </div>
+                {% else %}
+                <div class="form-group">
+                    <label for="{{ form.parent.id_for_label }}" class="mt-5">Родительская задача</label>
+                    {{ form.parent }}
+                    <div class="invalid-feedback">
+                        {{ form.parent.errors }}
+                    </div>
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}" class="mt-5">Описание</label>
+                    {{ form.description }}
+                    <div class="invalid-feedback">
+                        {{ form.description.errors }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-lg-4">
+                        <div class="form-group">
+                            <label for="{{ form.author.id_for_label }}" class="mt-5">Назначил</label>
+                            {{ form.author }}
+                            <div class="invalid-feedback">
+                                {{ form.author.errors }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.executor.id_for_label }}" class="mt-5">Исполнитель</label>
+                            {{ form.executor }}
+                            <div class="invalid-feedback">
+                                {{ form.executor.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg-4">
+                        <div class="form-group">
+                            <label for="{{ form.co_executor.id_for_label }}" class="mt-5">Со-исполнители</label>
+                            {{ form.co_executor }}
+                            <div class="invalid-feedback">
+                                {{ form.co_executor.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg-4">
+                        <div class="form-group">
+                            <label for="{{ form.viewers.id_for_label }}" class="mt-5">Наблюдатели</label>
+                            {{ form.viewers }}
+                            <div class="invalid-feedback">
+                                {{ form.viewers.errors }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-group">
+                      <label for="{{ fileform.attached_file.id_for_label }}">{{file_form.attached_file.label}}</label>
+                        {{ file_form.attached_file }}
+                        <div class="invalid-feedback">
+                            {{ file_form.attached_file.errors }}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-10">Сохранить</button>
+                <a href="" class="btn btn-danger mt-10">Удалить</a>
+            </div>
+            <div class="flex-column flex-lg-row-auto w-100 w-xl-300px mb-10">
+                <label for="{{ form.project.id_for_label }}" class="mt-5">Проект</label>
+                {% if form_type == 'add' or form_type == 'update' or form_type == 'copy_task' or form_type == 'add_sub_task' %}
+                <select name="project" class="form-select" id="id_project" disabled>
+                    <option value="1" selected="{{project.title.pk}}">{{project.title}}</option>
+                </select>
+                {% else %}
+                <div class="form-group">
+                    {{ form.project }}
+                    <div class="invalid-feedback">
+                        {{ form.project.errors }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="{{ form.priority.id_for_label }}" class="mt-5">Приоритет</label>
+                    {{ form.priority }}
+                    <div class="invalid-feedback">
+                        {{ form.priority.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.bdate.id_for_label }}" class="mt-5">Начало</label>
+                    {{ form.bdate }}
+                    <div class="invalid-feedback">
+                        {{ form.bdate.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.edate.id_for_label }}" class="mt-5">Срок</label>
+                    {{ form.edate }}
+                    <div class="invalid-feedback">
+                        {{ form.edate.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.tdate.id_for_label }}" class="mt-5">Дата выполнения</label>
+                    {{ form.tdate }}
+                    <div class="invalid-feedback">
+                        {{ form.tdate.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.estimated_time.id_for_label }}" class="mt-5">Оценочное время</label>
+                    {{ form.estimated_time }}
+                    <div class="invalid-feedback">
+                        {{ form.estimated_time.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.status.id_for_label }}" class="mt-5">Статус</label>
+                    {{ form.status }}
+                    <div class="invalid-feedback">
+                        {{ form.status.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check form-check-custom form-check-success form-check-solid mt-5">
+                        {{ form.is_completed }}
+                        <label class="form-check-label" for="{{ form.is_completed.id_for_label }}">
+                            Завершено
+                        </label>
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ form.is_completed.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.co_executor.id_for_label }}" class="mt-5">Процент выполнения</label>
+                    {{ form.progress }}
+                    <div class="invalid-feedback">
+                        {{ form.progress.errors }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

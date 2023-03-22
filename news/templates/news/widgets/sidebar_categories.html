@@ -1,0 +1,10 @@
+{% for item in categories %}
+    <div class="d-flex flex-stack fw-semibold fs-5 text-muted mb-4">
+      <!--begin::Text-->
+      <a href="{% url 'category' item.pk%}" class="text-muted text-hover-primary pe-2">{{item.title}}</a>
+      <!--end::Text-->
+      <!--begin::Number-->
+      <div class="m-0">{{item.cnt}}</div>
+      <!--end::Number-->
+    </div>
+{% endfor %}

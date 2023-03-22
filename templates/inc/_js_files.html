@@ -1,0 +1,23 @@
+{% load static %}
+<script>var hostUrl = "assets/";</script>
+<script src="{% static 'assets/plugins/global/plugins.bundle.js'%}"></script>
+<script src="{% static 'assets/js/scripts.bundle.js'%}"></script>
+<script src="{% static 'assets/plugins/custom/datatables/datatables.bundle.js'%}"></script>
+<script src="{% static 'assets/js/custom/apps/user-management/users/list/table.js'%}"></script>
+<script src="{% static 'assets/js/widgets.bundle.js'%}"></script>
+<script src="{% static 'assets/js/custom/widgets.js'%}"></script>
+<script src="{% static 'assets/js/custom/apps/chat/chat.js'%}"></script>
+<script src="{% static 'assets/js/custom/utilities/modals/upgrade-plan.js'%}"></script>
+<script src="{% static 'assets/js/custom/utilities/modals/create-app.js'%}"></script>
+<script src="{% static 'assets/js/custom/utilities/modals/users-search.js'%}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+    document.body.addEventListener('keydown', function(e) {
+        if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
+            var target = e.target;
+            if(target.form) {
+                target.form.submit();
+        }
+    });
+</script>

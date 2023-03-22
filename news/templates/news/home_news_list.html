@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load news_widgets %}
+{% load news_tags %}
+{% block content %}
+{% load project_tags %}
+
+<div class="card-body p-lg-20" style="padding-top:10px!important;">
+  <!--begin::Section-->
+  <div class="mb-17">
+      {% show_top_categories %}
+      <!--begin::Separator-->
+      <div class="separator separator-dashed mb-9"></div>
+      <!--end::Separator-->
+      <!--begin::Row-->
+      <div class="row">
+          <!--begin::Col-->
+          <div class="col-md-6">
+              <!--begin::Feature post-->
+              {% for first_new in firstnew %}
+              <div class="h-100 d-flex flex-column justify-content-between pe-lg-6 mb-lg-0 mb-10">
+                  <!--begin::Video-->
+                  <div class="mb-3">
+                      <div class="overlay mt-8">
+                          <!--begin::Image-->
+                          {% if first_new.photo %}
+                          <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-250px" style="background-image:url({{first_new.photo.url}})"></div>
+                          {% else %}
+                          <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-250px" style="background-image:url(https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/1600x800/img-1.jpg)"></div>
+                          {% endif %}
+                          <!--end::Image-->
+                      </div>
+                  </div>
+                  <!--end::Video-->
+                  <!--begin::Body-->
+                  <div class="mb-5">
+                      <!--begin::Title-->
+                      <a href="{{ first_new.get_absolute_url }}" class="fs-2 text-dark fw-bolder text-hover-primary text-dark lh-base">{{first_new.title}}</a>
+                      <!--end::Title-->
+                      <!--begin::Text-->
+                      <div class="fw-bold fs-5 text-gray-600 text-dark mt-4">{{first_new.content|truncatewords:30|striptags }}</div>
+                      <!--end::Text-->
+                  </div>
+                  <!--end::Body-->
+                  <!--begin::Footer-->
+                  <div class="d-flex flex-stack flex-wrap">
+                      <!--begin::Item-->
+                      <div class="d-flex align-items-center pe-2">
+                          <!--begin::Avatar-->
+                          <div class="symbol symbol-35px symbol-circle me-3">
+                              {% if first_new.author.profile.photo %}
+                              <img alt="" src="{{first_new.author.profile.photo.url}}">
+                              {% else %}
+                              <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{first_new.author.first_name|upfirstletter}}</span>
+                              {% endif %}
+                          </div>
+                          <!--end::Avatar-->
+                          <!--begin::Text-->
+                          <div class="fs-5 fw-bolder">
+                              <a href="{% url 'profile_view' first_new.author.pk %}" class="text-gray-700 text-hover-primary">{{first_new.author.first_name}} {{first_new.author.last_name}}</a>
+                              <span class="text-muted">{{ first_new.created_at|date:"d.m.Y H:i" }}</span>
+                          </div>
+                          <!--end::Text-->
+                      </div>
+                      <!--end::Item-->
+                      <!--begin::Label-->
+                      <span class="badge badge-light-primary fw-bolder my-2">{{first_new.category}}</span>
+                      <!--end::Label-->
+                  </div>
+                  <!--end::Footer-->
+              </div>
+              {% endfor %}
+              <!--end::Feature post-->
+          </div>
+          <!--end::Col-->
+          <!--begin::Col-->
+          <div class="col-md-6 justify-content-between d-flex flex-column">
+              <!--begin::Post-->
+                {% for item in homenews %}
+                <div class="ps-lg-6 mb-16 mt-md-0 mt-17">
+                  <!--begin::Body-->
+                  <div class="mb-6">
+                      <!--begin::Title-->
+                      <a href="{{ item.get_absolute_url }}" class="fw-bolder text-dark mb-4 fs-2 lh-base text-hover-primary">{{item.title}}</a>
+                      <!--end::Title-->
+                      <!--begin::Text-->
+                      <div class="fw-bold fs-5 mt-4 text-gray-600 text-dark">{{item.content|truncatewords:30|striptags }}</div>
+                      <!--end::Text-->
+                  </div>
+                  <!--end::Body-->
+                  <!--begin::Footer-->
+                  <div class="d-flex flex-stack flex-wrap">
+                      <!--begin::Item-->
+                      <div class="d-flex align-items-center pe-2">
+                          <!--begin::Avatar-->
+                          <div class="symbol symbol-35px symbol-circle me-3">
+                              {% if item.author.profile.photo %}
+                              <img src="{{item.author.profile.photo.url}}" class="" alt="">
+                              {% else %}
+                              <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{item.author.first_name|upfirstletter}}</span>
+                              {% endif %}
+                          </div>
+                          <!--end::Avatar-->
+                          <!--begin::Text-->
+                          <div class="fs-5 fw-bolder">
+                              <a href="{% url 'profile_view' item.author.pk %}" class="text-gray-700 text-hover-primary">{{item.author.first_name}} {{item.author.last_name}}</a>
+                              <span class="text-muted">{{ item.created_at|date:"d.m.Y H:i" }}</span>
+                          </div>
+                          <!--end::Text-->
+                      </div>
+                      <!--end::Item-->
+                      <!--begin::Label-->
+                      <span class="badge badge-light-info fw-bolder my-2">{{item.category.title}}</span>
+                      <!--end::Label-->
+                  </div>
+                  <!--end::Footer-->
+                </div>
+                {% empty %}
+                <h1>Новостей нет</h1>
+                {% endfor %}
+              <!--end::Post-->
+          </div>
+          <!--end::Col-->
+      </div>
+      <!--begin::Row-->
+  </div>
+  <!--end::Section-->
+  <!--begin::Section-->
+  <div class="mb-17">
+      <!--begin::Content-->
+      <div class="d-flex flex-stack mb-5">
+          <!--begin::Title-->
+          <h3 class="text-dark">Другие новости</h3>
+          <!--end::Title-->
+          <!--begin::Link-->
+          <a href="{% url 'all_news' %}" class="fs-6 fw-bold link-primary">Посмотреть все новости</a>
+          <!--end::Link-->
+      </div>
+      <!--end::Content-->
+      <!--begin::Separator-->
+      <div class="separator separator-dashed mb-9"></div>
+      <!--end::Separator-->
+      <!--begin::Row-->
+      {% show_lastnews_3 %}
+      <!--end::Row-->
+  </div>
+  <!--end::Section-->
+  <!--begin::Section-->
+  <div class="mb-17">
+      <!--begin::Content-->
+      <div class="d-flex flex-stack mb-5">
+          <!--begin::Title-->
+          <h3 class="text-dark">Часто просматриваемые</h3>
+          <!--end::Title-->
+          <!--begin::Link-->
+          <a href="{% url 'all_news' %}" class="fs-6 fw-bold link-primary">Все новости</a>
+          <!--end::Link-->
+      </div>
+      <!--end::Content-->
+      <!--begin::Separator-->
+      <div class="separator separator-dashed mb-9"></div>
+      <!--end::Separator-->
+      <!--begin::Row-->
+      {% show_topnews_3 %}
+      <!--end::Row-->
+  </div>
+  <!--end::Section-->
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+  {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block content %}
+  {% for item in news %}
+  {% if item.is_published == True %}
+
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-5">
+            {% if item.photo %}
+              <img src="{{item.photo.url}}" class="img-fluid rounded-start" width="600px">
+            {% else %}
+              <img src="https://picsum.photos/350/200" class="img-fluid rounded-start" width="600px">
+            {% endif %}
+          </div>
+          <div class="col-md-7">
+            <div class="card-body">
+              <h5 class="card-title">{{item.title}}</h5>
+              <p class="card-text">{{item.category.title}}</p>
+              <p class="card-text">{{item.content|truncatewords:10 }}</p>
+              <p class="card-text"><small class="text-muted">{{ item.created_at|date:"d-m-Y H:i" }}</small></p>
+              <a href="{{ item.get_absolute_url }}"><button type="button" class="btn btn-primary">Подробнее...</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+  {% endif %}
+  {% empty %}
+    <h1>Новостей нет</h1>
+  {% endfor %}
+{% endblock %}

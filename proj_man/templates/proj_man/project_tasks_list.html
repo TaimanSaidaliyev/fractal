@@ -1,0 +1,151 @@
+{% extends 'base_type/base_version_2.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% block content %}
+<div class="row me-0 h-100">
+    <div class="col col-md-2 border border-top-0 border-left-0 border-bottom-0 border-right-1 pe-0" style="background: #FAFBFC;">
+        {% show_proj_man_sidebar request page_type category %}
+    </div>
+    <div class="col col-md-10 p-5">
+		{% show_project_description project.pk %}
+		<div class="pb-10 ps-lg-10 pe-lg-10 ">
+		{% load mptt_tags %}
+		<table id="task_list" class="table table-row-dashed table-hover table-row-gray-300 align-middle gs-0 gy-2">
+			<!--begin::Table head-->
+			<thead>
+				<tr class="fw-bolder text-muted">
+					<th class="min-w-50px">
+						<div class="d-flex justify-content-center">
+							Статус
+						</div>
+					</th>
+					<th class="min-w-150px">Задача</th>
+					<th class="min-w-100px">
+						<div class="d-flex justify-content-center">
+							Приоритет
+						</div>
+					</th>
+					<th class="min-w-100px">
+						<div class="d-flex justify-content-center">
+							Прогресс
+						</div>
+					</th>
+					<th class="min-w-150px">
+						<div class="d-flex justify-content-center">
+							Срок
+						</div>
+					</th>
+					<th class="min-w-150px text-end">
+						<div class="d-flex justify-content-center">
+							Исполнитель
+						</div>
+					</th>
+
+				</tr>
+			</thead>
+			<!--end::Table head-->
+			<!--begin::Table body-->
+			<tbody>
+			{% recursetree tasks_list %}
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="{{node.status.css_color}}">{{node.status}}</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="{% url 'projects_task_detail' node.pk %}" class="{%if node.is_completed %}text-success text-hover-success {% else %}text-dark text-hover-primary {% endif %}fs-6" style="margin-left: {% widthratio node.level 1 30 %}px">
+								{% if node.parent %}
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+								</svg>
+								{% endif %}
+								{{ node.title }}
+								{% for actions in actions %}
+								{% if actions.task == node %}
+								<span class="fw-bold text-warning d-block fs-7" style="margin-left: 18px;">Ожидает вашего согласования</span>
+								{% endif %}
+								{% endfor %}
+							</a>
+						</div>
+
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="{{node.priority.css_color}}">{{node.priority}}</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar {% show_task_progress node.pk %}" role="progressbar" style="width: {{node.progress}}%" aria-valuenow="{{node.progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">{{node.edate}}</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										{% if node.executor.profile.photo %}
+										<img alt="Pic" src="{{ node.executor.profile.photo.url }}">
+										{% else %}
+										<span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{node.executor.first_name|upfirstletter}}</span>
+										{% endif %}
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="{% url 'profile_view' node.executor.pk%}" class="fs-5 text-gray-900 text-hover-primary">{{node.executor.first_name}} {{node.executor.last_name}}</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				{% if not node.is_leaf_node %}
+					{{ children }}
+					{% endif %}
+				{% endrecursetree %}
+			</tbody>
+			<!--end::Table body-->
+		</table>
+		</div>
+    </div>
+</div>
+<script>
+</script>
+
+{% endblock %}

@@ -1,0 +1,125 @@
+<!--<div class="card-body pt-5">-->
+<!--    <div class="timeline-label">-->
+<!--        &lt;!&ndash;begin::Item&ndash;&gt;-->
+<!--        <div class="timeline-item">-->
+<!--            &lt;!&ndash;begin::Label&ndash;&gt;-->
+<!--            <div class="timeline-label fw-bolder text-gray-800 fs-6">08:42</div>-->
+<!--            &lt;!&ndash;end::Label&ndash;&gt;-->
+<!--            &lt;!&ndash;begin::Badge&ndash;&gt;-->
+<!--            <div class="timeline-badge">-->
+<!--                <i class="fa fa-genderless text-warning fs-1"></i>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;end::Badge&ndash;&gt;-->
+<!--            &lt;!&ndash;begin::Text&ndash;&gt;-->
+<!--            <div class="fw-mormal timeline-content text-muted ps-3">Изменил название на: Навести красоту в форме ввода задач</div>-->
+<!--            &lt;!&ndash;end::Text&ndash;&gt;-->
+<!--        </div>-->
+<!--        &lt;!&ndash;end::Item&ndash;&gt;-->
+<!--    </div>-->
+<!--    &lt;!&ndash;end::Timeline&ndash;&gt;-->
+<!--</div>-->
+
+{% for action in action %}
+<div class="timeline-content fw-mormal text-muted ps-3 pt-5">{{action.user.first_name}} {{action.user.last_name}} {{action.created_at}}</div>
+<div class="card-body pt-5">
+    <div class="timeline-label">
+        {% for history in history %}
+            {% if history.task_change_action.pk == action.pk %}
+            <div class="timeline-item">
+                <div class="timeline-label fw-bolder text-gray-800 fs-6">21:03</div>
+                <div class="timeline-badge">
+                    <i class="fa fa-genderless {% cycle 'text-primary' 'text-secondary' 'text-danger' 'text-success' 'text-warning' 'text-info'%} fs-1"></i>
+                </div>
+                {% if history.column == 'title' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменено название <span class="fw-bolder text-gray-800">
+                    {{history.first_value}}</span> на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'description' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменено <span class="fw-bolder text-gray-800">описание задачи</span>
+                </div>
+                {% elif history.column == 'parent' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменена родительская задача <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'priority' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменен приоритет <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'status' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменен статус <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'priority' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменен приоритет <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'progress' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменен прогресс задачи <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'is_completed'%}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Задача <span class="fw-bolder text-gray-800">завершена</span>
+                </div>
+                {% elif history.column == 'bdate' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменена дата начала <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'edate' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменена дата окончания <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'tdate' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменена дата завершения <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'estimated_time' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменено оценочное время <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'author' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменен автор задачи <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'executor' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Изменен исполнитель задачи <span class="fw-bolder text-gray-800">{{history.first_value}}</span>
+                    на <span class="fw-bolder text-gray-800">{{history.finish_value}}</span>
+                </div>
+                {% elif history.column == 'sent_by_executor' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Отправил задачу на согласование
+                </div>
+                {% elif history.column == 'approve_by_author' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Задача согласована
+                </div>
+                {% elif history.column == 'deny_by_author' %}
+                <div class="timeline-content fw-bold text-gray-800 ps-3">
+                    Задача отклонена
+                </div>
+                {% else %}
+                <div class="timeline-content fw-bold text-gray-800">
+                    {{history.column}} - {{history.first_value}} - {{history.finish_value}}
+                </div>
+                {% endif %}
+
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+

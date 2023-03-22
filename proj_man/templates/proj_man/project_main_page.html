@@ -1,0 +1,124 @@
+{% extends 'base_type/base_version_2.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% block content %}
+<div class="row me-0 h-100">
+    <div class="col col-lg-2 border border-top-0 border-left-0 border-bottom-0 border-right-1 pe-0" style="background: #FAFBFC;">
+        {% show_proj_man_sidebar request page_type category %}
+    </div>
+    <div class="col col-md-10 p-5">
+        <div class="card-header border-0 pt-5">
+            {% if page_type == 'my_tasks' %}
+            <span class="card-label fw-bolder fs-3 mb-1"><h3 class="card-title align-items-start flex-column">Мои задачи</h3></span>
+            <span class="text-muted mt-1 fw-bold fs-7">У вас {{tasks_list.count}} открытых задач</h3></span>
+            {% elif page_type == 'user_self_saved_tasks' %}
+            <span class="card-label fw-bolder fs-3 mb-1"><h3 class="card-title align-items-start flex-column">Сохраненные задачи</h3></span>
+            <span class="text-muted mt-1 fw-bold fs-7">У вас {{tasks_list.count}} сохраненных задач</span>
+            {% elif page_type == 'self_user_tasks' %}
+            <span class="card-label fw-bolder fs-3 mb-1"><h3 class="card-title align-items-start flex-column">Созданные мной</h3></span>
+            <span class="text-muted mt-1 fw-bold fs-7">У вас {{tasks_list.count}} созданных задач</span>
+            {% elif page_type == 'completed_tasks' %}
+            <span class="card-label fw-bolder fs-3 mb-1"><h3 class="card-title align-items-start flex-column">Исполненные задачи</h3></span>
+            <span class="text-muted mt-1 fw-bold fs-7">У вас {{tasks_list.count}} исполненных задач</span>
+            {% elif page_type == 'user_self_category' %}
+            <span class="card-label fw-bolder fs-3 mb-1"><h3 class="card-title align-items-start flex-column">{{category}}</h3></span>
+            <a href="#" class="text-gray-500" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                  <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                </svg>
+            </a>
+            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true" style="">
+                <!--begin::Menu item-->
+                <div class="menu-item px-3">
+                    <span data-bs-toggle="modal" data-bs-target="#kt_modal_2" class="menu-link px-3">Переименовать</span>
+                </div>
+                <!--end::Menu item-->
+                <!--begin::Menu item-->
+                <div class="menu-item px-3">
+                    <span data-bs-toggle="modal" data-bs-target="#kt_modal_3" class="menu-link px-3">Удалить</span>
+                </div>
+                <!--end::Menu item-->
+            </div>
+            <div class="modal fade" tabindex="-1" id="kt_modal_2">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Добавить категорию</h3>
+                            <!--begin::Close-->
+                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                <span class="svg-icon svg-icon-1"></span>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <form method="post" action="{% url 'rename_user_category' category.pk %}">
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <p>Новое название</p>
+                                <input type="text" name="title" class="form-control" maxlength="100" id="id_title" value="{{category.title}}">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+                                <button type="submit" class="btn btn-primary">Переименовать</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" tabindex="-1" id="kt_modal_3">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Вы подтверждаете удаление?</h3>
+                            <!--begin::Close-->
+                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                <span class="svg-icon svg-icon-1"></span>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-dark">Удаление категории не подлежит восстановлению.
+                                Задачи, которые были добавлены в эту категорию не буду удалены, но данная категория больше не будет существовать.
+                                Вы подтверждаете удаление?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+                            <form method="post" action="{% url 'delete_user_category' category.pk %}">
+                            <a href="{% url 'delete_user_category' category.pk %}" class="btn btn-danger">Удалить категорию</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="text-muted mt-1 fw-bold fs-7"> {{tasks_list.count}} задач по этой категории</span>
+            {% elif page_type == 'user_viewers_task_list' %}
+            <span class="card-label fw-bolder fs-3 mb-1"><h3 class="card-title align-items-start flex-column">Отслеживаемые задачи</h3></span>
+            <span class="text-muted mt-1 fw-bold fs-7">У вас {{tasks_list.count}} отслеживаемых задач</h3></span>
+            {% endif %}
+        </div>
+        <div class="card-body py-3">
+            {% show_tasks_table request tasks_list %}
+        </div>
+    </div>
+</div>
+{% endblock %}

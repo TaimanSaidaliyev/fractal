@@ -1,0 +1,248 @@
+<div class="card-body">
+    <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase mt-2 mb-2">Навигация</div>
+    <!--begin::Menu-->
+    <div class="menu menu-column menu-rounded menu-state-bg-light-primary menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
+        <!--begin::Menu item-->
+        <div class="menu-item mb-3">
+            <!--begin::Inbox-->
+            <a href="{% url 'project_main' %}" class="text-dark">
+            {% if page_type == 'my_tasks' %}
+            <span class="menu-link active">
+            {% else %}
+            <span class="menu-link">
+            {% endif %}
+                <span class="menu-icon">
+                    <!--begin::Svg Icon | path: icons/duotune/communication/com010.svg-->
+                    <span class="svg-icon svg-icon-2 me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 8.725C6 8.125 6.4 7.725 7 7.725H14L18 11.725V12.925L22 9.725L12.6 2.225C12.2 1.925 11.7 1.925 11.4 2.225L2 9.725L6 12.925V8.725Z" fill="currentColor"></path>
+                            <path opacity="0.3" d="M22 9.72498V20.725C22 21.325 21.6 21.725 21 21.725H3C2.4 21.725 2 21.325 2 20.725V9.72498L11.4 17.225C11.8 17.525 12.3 17.525 12.6 17.225L22 9.72498ZM15 11.725H18L14 7.72498V10.725C14 11.325 14.4 11.725 15 11.725Z" fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-title fw-bolder">Назначенные мне</span>
+                <span class="badge badge-light-primary">{{count_my_task}}</span>
+            </span>
+            <!--end::Inbox-->
+        </div>
+        </a>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item mb-3">
+            <!--begin::Inbox-->
+            <a href="{% url 'project_userself_created_tasks' %}" class="text-dark">
+            {% if page_type == 'self_user_tasks' %}
+            <span class="menu-link active">
+            {% else %}
+            <span class="menu-link">
+            {% endif %}
+                <span class="menu-icon">
+                    <!--begin::Svg Icon | path: icons/duotune/communication/com010.svg-->
+                    <span class="svg-icon svg-icon-2 me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 8.725C6 8.125 6.4 7.725 7 7.725H14L18 11.725V12.925L22 9.725L12.6 2.225C12.2 1.925 11.7 1.925 11.4 2.225L2 9.725L6 12.925V8.725Z" fill="currentColor"></path>
+                            <path opacity="0.3" d="M22 9.72498V20.725C22 21.325 21.6 21.725 21 21.725H3C2.4 21.725 2 21.325 2 20.725V9.72498L11.4 17.225C11.8 17.525 12.3 17.525 12.6 17.225L22 9.72498ZM15 11.725H18L14 7.72498V10.725C14 11.325 14.4 11.725 15 11.725Z" fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-title fw-bolder">Созданные мной</span>
+                <span class="badge badge-light-success">{{count_user_self_tasks}}</span>
+            </span>
+            <!--end::Inbox-->
+        </div>
+        </a>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item mb-3">
+            <a href="{% url 'projects_list' %}" class="text-dark">
+            <!--begin::Draft-->
+            {% if page_type == 'my_projects'%}
+            <span class="menu-link active">
+            {% else %}
+            <span class="menu-link">
+            {% endif %}
+                <span class="menu-icon">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen009.svg-->
+                    <span class="svg-icon svg-icon-2 me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-kanban-fill" viewBox="0 0 16 16">
+                          <path d="M2.5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-11zm5 2h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm-5 1a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm9-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-title fw-bolder">Проекты</span>
+                <span class="badge badge-light-warning">{{count_my_projects}}</span>
+            </span>
+            </a>
+            <!--end::Draft-->
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item mb-3">
+            <!--begin::Marked-->
+            <a href="{% url 'project_userself_saved_tasks' %}" class="text-dark">
+            {% if page_type == 'user_self_saved_tasks' %}
+            <span class="menu-link active">
+            {% else %}
+            <span class="menu-link">
+            {% endif %}
+                <span class="menu-icon">
+                    <!--begin::Svg Icon | path: icons/duotune/abstract/abs024.svg-->
+                    <span class="svg-icon svg-icon-2 me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M16.0077 19.2901L12.9293 17.5311C12.3487 17.1993 11.6407 17.1796 11.0426 17.4787L6.89443 19.5528C5.56462 20.2177 4 19.2507 4 17.7639V5C4 3.89543 4.89543 3 6 3H17C18.1046 3 19 3.89543 19 5V17.5536C19 19.0893 17.341 20.052 16.0077 19.2901Z" fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-title fw-bolder">Сохраненные</span>
+                <span class="badge badge-light-success">{{count_saved_tasks}}</span>
+
+            </span>
+            </a>
+            <!--end::Marked-->
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item mb-3">
+            <!--begin::Draft-->
+            <a href="{% url 'view_completed_tasks'%}" class="text-dark">
+                {% if page_type == 'completed_tasks'%}
+                <span class="menu-link active">
+                {% else %}
+                <span class="menu-link">
+                {% endif %}
+                    <span class="menu-icon">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen009.svg-->
+                        <span class="svg-icon svg-icon-2 me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.3" d="M21 22H14C13.4 22 13 21.6 13 21V3C13 2.4 13.4 2 14 2H21C21.6 2 22 2.4 22 3V21C22 21.6 21.6 22 21 22Z" fill="currentColor"></path>
+                                <path d="M10 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H10C10.6 2 11 2.4 11 3V21C11 21.6 10.6 22 10 22Z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-title fw-bolder">Исполненные</span>
+                    <span class="badge badge-light-warning">{{count_completed_tasks}}</span>
+                </span>
+            </a>
+            <!--end::Draft-->
+        </div>
+        <!--begin::Menu item-->
+        <div class="menu-item mb-3">
+            <a href="{% url 'view_viewers_task' %}" class="text-dark">
+            <!--begin::Sent-->
+            {% if page_type == 'user_viewers_task_list'%}
+            <a class="menu-link active">
+            {% else %}
+            <span class="menu-link">
+            {% endif %}
+                <span class="menu-icon">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen016.svg-->
+                    <span class="svg-icon svg-icon-2 me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M15.43 8.56949L10.744 15.1395C10.6422 15.282 10.5804 15.4492 10.5651 15.6236C10.5498 15.7981 10.5815 15.9734 10.657 16.1315L13.194 21.4425C13.2737 21.6097 13.3991 21.751 13.5557 21.8499C13.7123 21.9488 13.8938 22.0014 14.079 22.0015H14.117C14.3087 21.9941 14.4941 21.9307 14.6502 21.8191C14.8062 21.7075 14.9261 21.5526 14.995 21.3735L21.933 3.33649C22.0011 3.15918 22.0164 2.96594 21.977 2.78013C21.9376 2.59432 21.8452 2.4239 21.711 2.28949L15.43 8.56949Z" fill="currentColor"></path>
+                            <path opacity="0.3" d="M20.664 2.06648L2.62602 9.00148C2.44768 9.07085 2.29348 9.19082 2.1824 9.34663C2.07131 9.50244 2.00818 9.68731 2.00074 9.87853C1.99331 10.0697 2.04189 10.259 2.14054 10.4229C2.23919 10.5869 2.38359 10.7185 2.55601 10.8015L7.86601 13.3365C8.02383 13.4126 8.19925 13.4448 8.37382 13.4297C8.54839 13.4145 8.71565 13.3526 8.85801 13.2505L15.43 8.56548L21.711 2.28448C21.5762 2.15096 21.4055 2.05932 21.2198 2.02064C21.034 1.98196 20.8409 1.99788 20.664 2.06648Z" fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-title fw-bolder">Отслеживаемые</span>
+            </span>
+                <!--end::Sent-->
+            </a>
+        </div>
+        <!--end::Menu item-->
+
+        <!--begin::Menu item-->
+        <div class="menu-item">
+            <!--begin::Trash-->
+            <span class="menu-link">
+                <span class="menu-icon">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                    <span class="svg-icon svg-icon-2 me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                            <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                            <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-title fw-bolder">Корзина</span>
+            </span>
+            <!--end::Trash-->
+        </div>
+        <!--end::Menu item-->
+    </div>
+    <!--end::Menu-->
+    <!--begin::Menu-->
+    <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary">
+        <h4 class="text-dark mb-7 ms-4">Категории</h4>
+        {% for category in user_self_categories %}
+        <!--begin::Menu item-->
+        <div class="menu-item mb-3">
+            <!--begin::Custom work-->
+            <a href="{% url 'project_userself_category' category.pk %}" class="text text-active-dark text-dark">
+            {% if category.pk == category_id %}
+                <span class="menu-link active">
+                    <span class="menu-title fw-bold">{{category.title}}</span>
+                    <span class="badge badge-light-danger">{{category.cnt}}</span>
+                </span>
+            {% else %}
+                <span class="menu-link">
+                    <span class="menu-title fw-bold">{{category.title}}</span>
+                    <span class="badge badge-light-danger">{{category.cnt}}</span>
+                </span>
+            {% endif %}
+            </a>
+
+            <!--end::Custom work-->
+        </div>
+        <!--end::Menu item-->
+        {% endfor %}
+        <div class="menu-item mb-3">
+            <span class="menu-link">
+                <span class="menu-title fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                        </svg>
+                    </span>
+                    Категория
+                </span>
+            </span>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="kt_modal_1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Добавить категорию</h3>
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="svg-icon svg-icon-1"></span>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <form method="post" action="{% url 'add_user_category' %}">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <p>Наименование категории</p>
+                        <input type="text" name="title" class="form-control" maxlength="100" id="id_title">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end::Menu-->
+</div>
+
+

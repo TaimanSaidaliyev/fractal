@@ -1,0 +1,406 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% load user_time_tracking %}
+{% block content %}
+
+<div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bolder fs-3 mb-1">Список задач</span>
+        <span class="text-muted mt-1 fw-bold fs-7">Количество задач: {{list_todo.count}}</span>
+    </h3>
+      <div class="card-toolbar">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-secondary fw-bolder px-4 me-1 active" data-bs-toggle="tab" href="#kt_table_widget_5_tab_1">Текущие</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-secondary fw-bolder px-4 me-1" data-bs-toggle="tab" href="#kt_table_widget_5_tab_2">Исполненные</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-secondary fw-bolder px-4 me-1" data-bs-toggle="tab" href="#kt_table_widget_5_tab_3">Закрытые</a>
+            </li>
+        </ul>
+        <div class="py-5 float-end">
+          <a href="{% url 'add_todo' %}" class="btn btn-primary me-2">
+            <span class="svg-icon svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+            </span>
+            <!--end::Svg Icon-->Задача
+          </a>
+        </div>
+    </div>
+</div>
+
+<!--end::Header-->
+<!--begin::Body-->
+<div class="card-body py-3">
+    <div class="tab-content">
+        <!--begin::Tap pane-->
+        <div class="tab-pane fade active show" id="kt_table_widget_5_tab_1">
+            <table class="table table-hover table-row-dashed table-row-gray-300 align-middle gs-0">
+            <!--begin::Table head-->
+            <thead>
+                <tr class="fw-bolder text-muted">
+                    <th>
+                        <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center h-40px bg-white"></span>
+                    </th>
+                    <th class="w-25px">
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-9-check">
+                        </div>
+                    </th>
+                    <th class="min-w-200px">Задача</th>
+                    <th class="min-w-150px">Дата начала</th>
+                    <th class="min-w-150px">Дата окончания</th>
+                    <th class="min-w-100px">Статус</th>
+                    <th class="min-w-150px">Назначил</th>
+                    <th class="min-w-150px">Исполнитель</th>
+                    <th class="min-w-100px">Прогресс</th>
+                    <th class="min-w-100px text-end">Действия</th>
+                </tr>
+            </thead>
+            <!--end::Table head-->
+            <!--begin::Table body-->
+            <tbody>
+            {% for open_todo in list_todo %}
+            {% if open_todo.completed == False and open_todo.status_id  == 2 %}
+                <tr class="{% if open_todo.reminder == True %} border-active-primary {% endif %}">
+                    <td>
+                        <span data-kt-element="bullet" class="bullet bullet-vertical d-flex align-items-center h-40px {% if open_todo.reminder == True %}bg-info{% else %}bg-white{% endif %} "
+                              {% if open_todo.reminder == True %}
+                              data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="Отмечена вами">{% endif %}
+                        </span>
+
+                    </td>
+                    <td>
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input class="form-check-input widget-9-check" type="checkbox" value="1">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex justify-content-start flex-column">
+                                <a href="{% url 'todo_detail' open_todo.pk %}" class="{% if open_todo.reminder == True %}fw-bolder{% endif %} text {% if open_todo.remind_me.is_coming == 1 %} text-warning {% elif open_todo.remind_me.is_coming == -1 %} text-danger {% else %} text-dark {% endif %}text-hover-primary fs-6"
+                                   {% if open_todo.remind_me.is_coming == 1 %}
+                                   data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="На грани просрочки"
+                                   {% elif open_todo.remind_me.is_coming == -1 %}
+                                   data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="Задача просрочена"
+                                   {% endif %}
+                                >{{open_todo.title}}
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {% if open_todo.reminder == True %}
+                        <span class="text-dark fw-bolder text-hover-primary d-block text-muted fs-6">{{open_todo.edate}}</span>
+                        {% else %}
+                        <span class="text-dark text-hover-primary d-block text-muted fs-6">{{open_todo.edate}}</span>
+                        {% endif %}
+                    </td>
+                    <td class="align-items-center">
+                        <span class="text-muted fw-bold text-muted d-block fs-7 fw-bolder" style="color:{{open_todo.priority.color_html}}!important;">{{open_todo.priority.title}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark fw-bolder text-hover-primary d-block text-muted fs-6">
+                            <span class="{{open_todo.status.color}}">{{open_todo.status}}</span>
+                        </span>
+                    </td>
+                    <td>
+                        <div class="d-flex">
+                            <span class="text-dark fs-6">
+                                <div class="d-flex align-items-center">
+                                    <!--begin::Avatar-->
+                                    <div class="me-5 position-relative">
+                                        <div class="symbol symbol-35px symbol-circle">
+                                            <img alt="Pic" src="{{open_todo.author.profile.photo.url}}">
+                                        </div>
+                                    </div>
+                                    <!--end::Avatar-->
+                                    <!--begin::Details-->
+                                    <div class="fw-bold">
+                                        <a href="{% url 'profile_view' open_todo.author.pk %}" class="fs-5 text-gray-900 text-hover-primary">{{open_todo.author.first_name}} {{open_todo.author.last_name}}</a>
+                                    </div>
+                                    <!--end::Details-->
+
+                                </div>
+                                </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex">
+                            <span class="text-dark fs-6">
+                                <div class="d-flex align-items-center">
+                                    <!--begin::Avatar-->
+                                    <div class="me-5 position-relative">
+                                        <div class="symbol symbol-35px symbol-circle">
+                                            {% if open_todo.executor.profile.photo %}
+                                            <img alt="Pic" src="{{ open_todo.executor.profile.photo.url }}">
+                                            {% else %}
+                                            <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{open_todo.executor.first_name|upfirstletter}}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <!--end::Avatar-->
+                                    <!--begin::Details-->
+                                    <div class="fw-bold">
+                                        <a href="{% url 'profile_view' open_todo.executor.pk %}" class="fs-5 text-gray-900 text-hover-primary">{{open_todo.executor.first_name}} {{open_todo.executor.last_name}}</a>
+                                    </div>
+                                    <!--end::Details-->
+
+                                </div>
+                                </span>
+                        </div>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex flex-column w-100 me-2">
+                            <div class="progress h-6px w-100">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{open_todo.progress}}%" aria-valuenow="{{open_todo.progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-end flex-shrink-0">
+                            <a href="{% url 'todo_update' open_todo.pk %}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                <span class="svg-icon svg-icon-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"></path>
+                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"></path>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </a>
+                            <a href="{% url 'todo_delete' open_todo.pk %}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                <span class="svg-icon svg-icon-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+            <!--end::Table body-->
+        </table>
+        </div>
+        <!--end::Tap pane-->
+        <!--begin::Tap pane-->
+        <div class="tab-pane fade" id="kt_table_widget_5_tab_2">
+            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <!--begin::Table head-->
+            <thead>
+                <tr class="fw-bolder text-muted">
+                    <th class="w-25px">
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-9-check">
+                        </div>
+                    </th>
+                    <th class="min-w-200px">Задача</th>
+                    <th class="min-w-150px">Дата начала</th>
+                    <th class="min-w-150px">Дата окончания</th>
+                    <th class="min-w-150px">Статус</th>
+                    <th class="min-w-150px">Прогресс</th>
+                    <th class="min-w-100px text-end">Действия</th>
+                </tr>
+            </thead>
+            <!--end::Table head-->
+            <!--begin::Table body-->
+            <tbody>
+            {% for completed_todo in list_todo %}
+            {% if completed_todo.completed == True %}
+                <tr>
+                    <td>
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input class="form-check-input widget-9-check" type="checkbox" value="1">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex justify-content-start flex-column">
+                                <a href="{% url 'todo_detail' completed_todo.pk %}" class="text-dark fw-bolder text-hover-primary fs-6">{{completed_todo.title}}</a>
+                                <span class="text-muted fw-bold text-muted d-block fs-7" style="color:{{completed_todo.priority.color_html}}!important;">{{completed_todo.priority.title}}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-dark fw-bolder text-hover-primary d-block text-muted fs-6">{{completed_todo.bdate}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark fw-bolder text-hover-primary d-block text-muted fs-6">{{completed_todo.edate}}</span>
+                    </td>
+                    <td class="p-10 pb-0 ">
+                        <span class="text-dark fw-bolder text-hover-primary d-block text-muted fs-6">
+                            <span class="{{completed_todo.status.color}} me-10 mb-10">{{completed_todo.status}}</span>
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex flex-column w-100 me-2">
+                            <div class="d-flex flex-stack mb-2">
+                                <span class="text-muted me-2 fs-7 fw-bold">{{completed_todo.progress}}%</span>
+                            </div>
+                            <div class="progress h-6px w-100">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{completed_todo.progress}}%" aria-valuenow="{{completed_todo.progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-end flex-shrink-0">
+                            <a href="{% url 'todo_update' completed_todo.pk %}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                <span class="svg-icon svg-icon-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"></path>
+                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"></path>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </a>
+                            <a href="{% url 'todo_delete' completed_todo.pk %}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                <span class="svg-icon svg-icon-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+            <!--end::Table body-->
+        </table>
+
+        </div>
+        <!--end::Tap pane-->
+        <!--begin::Tap pane-->
+        <div class="tab-pane fade" id="kt_table_widget_5_tab_3">
+            <table class="table table-hover table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <!--begin::Table head-->
+            <thead>
+                <tr class="fw-bolder text-muted">
+                    <th class="w-25px">
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-9-check">
+                        </div>
+                    </th>
+                    <th class="min-w-200px">Задача</th>
+                    <th class="min-w-150px">Дата начала</th>
+                    <th class="min-w-150px">Дата окончания</th>
+                    <th class="min-w-150px">Статус</th>
+                    <th class="min-w-150px">Прогресс</th>
+                    <th class="min-w-100px text-end">Действия</th>
+                </tr>
+            </thead>
+            <!--end::Table head-->
+            <!--begin::Table body-->
+            <tbody>
+            {% for closed_todo in list_todo %}
+            {% if closed_todo.completed  == False and closed_todo.status_id != 2 %}
+                <tr>
+                    <td>
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input class="form-check-input widget-9-check" type="checkbox" value="1">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex justify-content-start flex-column">
+                                <a href="{% url 'todo_detail' closed_todo.pk %}" class="text-dark fw-bolder text-hover-primary fs-6">{{closed_todo.title}}</a>
+                                <span class="text-muted fw-bold text-muted d-block fs-7" style="color:{{closed_todo.priority.color_html}}!important;">{{closed_todo.priority.title}}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-dark fw-bolder text-hover-primary d-block text-muted fs-6">{{closed_todo.bdate}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark fw-bolder text-hover-primary d-block text-muted fs-6">{{closed_todo.edate}}</span>
+                    </td>
+                    <td class="p-10 pb-0 ">
+                        <span class="text-dark fw-bolder text-hover-primary d-block text-muted fs-6">
+                            <span class="{{closed_todo.status.color}} me-10 mb-10">{{closed_todo.status}}</span>
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex flex-column w-100 me-2">
+                            <div class="d-flex flex-stack mb-2">
+                                <span class="text-muted me-2 fs-7 fw-bold">{{closed_todo.progress}}%</span>
+                            </div>
+                            <div class="progress h-6px w-100">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{closed_todo.progress}}%" aria-valuenow="{{closed_todo.progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-end flex-shrink-0">
+                            <a href="{% url 'todo_update' closed_todo.pk %}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                <span class="svg-icon svg-icon-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"></path>
+                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"></path>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </a>
+                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                <span class="svg-icon svg-icon-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+            <!--end::Table body-->
+        </table>
+
+        </div>
+        <!--end::Tap pane-->
+    </div>
+</div>
+{% endblock %}

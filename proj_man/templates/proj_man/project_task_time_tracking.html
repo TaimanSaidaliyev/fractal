@@ -1,0 +1,48 @@
+{% extends 'base_type/base_version_2.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% block content %}
+{% load static %}
+<div class="card-body">
+    {{jai_text}}
+    <form action="{% url 'add_time_tracking_by_task' task.pk %}" method="POST">
+    {% csrf_token %}
+        <div class="row">
+            <div class="col-md-3">
+                <label class="mb-2">Дата</label>
+                {{form.track_date}}
+            </div>
+            <div class="col-md-3">
+                <label class="mb-2">Затраченное время</label>
+                {{form.spent_time}}
+            </div>
+            <div class="col-md-3">
+                <label class="mb-2">Описание</label>
+                {{form.description}}
+            </div>
+        </div>
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+{% endblock %}

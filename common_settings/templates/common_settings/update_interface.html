@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ news_item.title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+  {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load news_tags %}
+{% load sidebar_last_news %}
+{% load news_widgets %}
+{% load alerts %}
+{% block content %}
+
+
+  <!--begin::Body-->
+  <div class="card-body p-lg-20 pb-lg-0">
+      <span class="fs-2 text-dark fw-bolder text-hover-primary text-dark lh-base">Настройка интерфейса</span>
+      {% if updated %}
+        {% show_alerts request.resolver_match.url_name %}
+      {% endif %}
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <div class="form-group">
+              <label for="{{ form.title.id_for_label }}">Заголовок</label>
+                {{ form.title }}
+                <div class="invalid-feedback">
+                    {{ form.title.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label for="{{ form.template_type.id_for_label }}">Общий дизайн</label>
+                {{ form.template_type }}
+                <div class="invalid-feedback">
+                    {{ form.template_type.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label for="{{ form.sidebar.id_for_label }}">Боковая панель</label>
+                {{ form.sidebar }}
+                <div class="invalid-feedback">
+                    {{ form.sidebar.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label for="{{ form.is_sidebar.id_for_label }}">Наличие бокового меню</label>
+                {{ form.is_sidebar }}
+                <div class="invalid-feedback">
+                    {{ form.is_sidebar.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label for="{{ form.header.id_for_label }}">Шапка</label>
+                {{ form.header }}
+                <div class="invalid-feedback">
+                    {{ form.header.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label for="{{ form.content_type.id_for_label }}">Ширина контента</label>
+                {{ form.content_type }}
+                <div class="invalid-feedback">
+                    {{ form.content_type.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label>Общий логотип сайта</label>
+                {{ form.photo }}
+                <div class="invalid-feedback">
+                    {{ form.photo.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label>Логотип для светлой темы</label>
+                {{ form.logo_light }}
+                <div class="invalid-feedback">
+                    {{ form.logo_light.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label>Логотип для темной темы</label>
+                {{ form.logo_dark }}
+                <div class="invalid-feedback">
+                    {{ form.logo_dark.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+              <label>Фоновое изображение</label>
+                {{ form.background_theme }}
+                <div class="invalid-feedback">
+                    {{ form.background_theme.errors }}
+                </div>
+            </div>
+        </div>
+        <button type = "submit" class="btn btn-primary">Сохранить</button>
+      </form>
+
+
+  </div>
+
+
+{% endblock %}

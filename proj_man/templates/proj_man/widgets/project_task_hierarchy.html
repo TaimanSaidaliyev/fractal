@@ -1,0 +1,20 @@
+{% load project_tags %}
+{% if tasks_count > 1 %}
+<div class="fs-4 fw-bolder mb-5">Иерархия</div>
+<table>
+{% for task_hierarchy in task_hierarchy %}
+    <tr>
+        <td>
+            <div style="margin-left: {% widthratio forloop.counter0 1 15 %}px">
+                {% if forloop.last %}
+                <a class="text-hover-primary text-active-primary text-primary" href="{% url 'projects_task_detail' task_hierarchy.pk %}" style="font-size:10pt">{{task_hierarchy.title}}</a>
+                {% else %}
+                <a class="text-gray-500 text-hover-primary" href="{% url 'projects_task_detail' task_hierarchy.pk %}" style="font-size:10pt">{{task_hierarchy.title}}</a>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+{% endfor %}
+{% endif %}
+</table>
+

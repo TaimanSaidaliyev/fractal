@@ -1,0 +1,15 @@
+    {% for item in categories %}
+    <a class="menu-link" href="{% url 'category' item.pk%}" title="{{item.title}}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+        <span class="menu-icon">
+            <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+            <span class="svg-icon svg-icon-2 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"></svg>
+            </span>
+            <!--end::Svg Icon-->
+        </span>
+        <span class="menu-title">{{item.title}}</span>
+        <span class="menu-badge">
+            <span class="badge badge-light-danger badge-circle fw-bolder fs-7">{{item.cnt}}</span>
+        </span>
+    </a>
+    {% endfor %}

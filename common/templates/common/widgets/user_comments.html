@@ -1,0 +1,82 @@
+{% load project_tags %}
+<div class="d-flex align-items-center collapsible py-3 toggle mb-0 active" data-bs-toggle="collapse" data-bs-target="#kt_comments" aria-expanded="true">
+    <span class="text-dark fs-4 me-3 fw-bolder cursor-pointer">Комментарии ({{comments.count}})</span>
+    <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+        <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
+        <span class="svg-icon toggle-off svg-icon-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
+                <rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor"></rect>
+                <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+        <!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
+        <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
+                <rect x="6.0104" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+</div>
+<div id="kt_comments" class="fs-6 collapse show" style="">
+    <div class="accordion accordion-icon-toggle" id="kt_accordion_1">
+        <div class="m-0">
+            {% if comments.count == 0 %}
+            Комментариев нет
+            {% endif %}
+            {% load mptt_tags %}
+            {% recursetree comments %}
+            <div class="d-flex pt-6" style="margin-left: {% widthratio node.level 1 30 %}px">
+                <div class="symbol symbol-45px me-5">
+                    {% if node.author.profile.photo %}
+                    <img src="{{node.author.profile.photo.url}}" alt="">
+                    {% else %}
+                    <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{node.author.first_name|upfirstletter}}</span>
+                    {% endif %}
+                </div>
+                <div class="d-flex flex-column flex-row-fluid">
+                    <div class="d-flex align-items-center flex-wrap mb-0">
+                        <a href="/profile/6" class="text-gray-800 text-hover-primary fw-bolder me-6">{{node.author.first_name}} {{node.author.last_name}}</a>
+                        <span class="text-gray-400 fw-semibold fs-7 me-5">{{node.created_at}}</span>
+                        <a class="fw-semibold fs-7 me-5 text-gray-400 text-hover-danger" href="{% url 'delete_common_comment' node.pk %}">Удалить</a>
+                        <a class="fw-semibold fs-7 me-5 text-gray-400 text-hover-primary" href="{% url 'delete_common_comment' node.pk %}" data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_item_{{node.pk}}" aria-expanded="true">Ответить</a>
+                    </div>
+                    <span class="text-gray-800 fs-7 fw-normal pt-1">{{node.description}}</span>
+                    <div id="kt_accordion_1_item_{{node.pk}}" class="collapse w-100" data-bs-parent="#kt_accordion_1" >
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-45px me-5">
+                                {% if request.user.profile.photo %}
+                                <img src="{{request.user.profile.photo.url}}" alt="">
+                                {% else %}
+                                <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{request.user.first_name|upfirstletter}}</span>
+                                {% endif %}
+                            </div>
+                            <div class="position-relative w-100">
+                                <form action="{% url 'reply_common_comment' record_id module_id node.pk%}" class="mt-5" method="POST">
+                                    {% csrf_token %}
+                                    {{form.description}}
+                                    <button class="btn btn-primary mt-5" type="submit" hidden="true">Отправить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            {% if not node.is_leaf_node %}
+                {{ children }}
+                {% endif %}
+            {% endrecursetree %}
+        </div>
+        <div class="mt-10">
+            <form action="{% url 'add_common_comment' record_id module_id %}" method="POST">
+                {% csrf_token %}
+                {{form.description}}
+                <button class="btn btn-primary mt-5" type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="separator separator-dashed"></div>

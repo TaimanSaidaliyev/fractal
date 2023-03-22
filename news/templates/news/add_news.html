@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+
+{% block content %}
+      <div class="card-body p-lg-20 pb-lg-0">
+          <h1>Добавление новости</h1>
+          {{update_success}}
+          {% if update %}
+          <form action="{% url 'update_news' news.id %}" method="post" enctype="multipart/form-data">
+          {% else %}
+          <form action="{% url 'add_news' %}" method="post" enctype="multipart/form-data">
+          {% endif %}
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.non_field.errors }}
+            <div class="mb-3">
+                <div class="form-group">
+                  <label for="{{ form.title.id_for_label }}">Заголовок</label>
+                    {{ form.title }}
+                    <div class="invalid-feedback">
+                        {{ form.title.errors }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="form-group">
+                  <label for="{{ form.content.id_for_label }}">Подробное описание</label><br>
+                    {{ form.content }}
+                    <div class="invalid-feedback">
+                        {{ form.content.errors }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="form-group">
+                  <label for="{{ form.is_published.id_for_label }}">Опубликовано</label>
+                    {{ form.is_published }}
+                    <div class="invalid-feedback">
+                        {{ form.is_published.errors }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="form-group">
+                  <label for="{{ form.category.id_for_label }}">Категория</label>
+                    {{ form.category }}
+                    <div class="invalid-feedback">
+                        {{ form.category.errors }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="form-group">
+                  <label for="{{ form.category.id_for_label }}">Изображение</label>
+                    {{ form.photo }}
+                    <div class="invalid-feedback">
+                        {{ form.photo.errors }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="form-group">
+                  <label for="{{ form.category.id_for_label }}">Автор статьи</label>
+                    {{ form.author }}
+                    <div class="invalid-feedback">
+                        {{ form.author.errors }}
+                    </div>
+                </div>
+            </div>
+            <button type = "submit" class="btn btn-primary">Сохранить</button>
+          </form>
+      </div>
+{% endblock %}

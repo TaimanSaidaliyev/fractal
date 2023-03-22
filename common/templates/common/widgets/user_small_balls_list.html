@@ -1,0 +1,44 @@
+{% load project_tags %}
+{% if user_one %}
+{% for user in user_list.all %}
+<div class="d-flex">
+    <a href="{% url 'profile_view' user.pk %}" class="fs-5 text-gray-900 text-hover-primary">
+        <span class="text-dark fs-6">
+            <div class="d-flex align-items-center">
+                <div class="me-5 position-relative">
+                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="{{user.first_name}} {{user.last_name}}">
+                        {% if user.profile.photo %}
+                        <img alt="Pic" src="{{ user.profile.photo.url }}">
+                        {% else %}
+                        <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{user.first_name|upfirstletter}}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="fw-bold">
+                    <span class="fs-5 text-gray-900 text-hover-primary fs-7">{{user.first_name}} {{user.last_name}}</span>
+                </div>
+            </div>
+        </span>
+    </a>
+</div>
+{% endfor %}
+{% else %}
+<div class="symbol-group symbol-hover">
+    {% for user in user_list.all %}
+    <a href="{% url 'profile_view' user.pk %}">
+        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="{{user.first_name}} {{user.last_name}}">
+            {% if user.profile.photo %}
+            <img alt="Pic" src="{{ user.profile.photo.url }}">
+            {% else %}
+            <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{user.first_name|upfirstletter}}</span>
+            {% endif %}
+        </div>
+    </a>
+    {% endfor %}
+    {% if user_many %}
+    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="Еще {{user_count}} человек">
+        <span class="symbol-label bg-primary text-inverse-primary fw-bolder">+{{user_count}}</span>
+    </div>
+    {% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,20 @@
+{% load project_tags %}
+
+<div class="d-flex">
+    <span class="text-dark fs-6">
+        <div class="d-flex align-items-center">
+            <div class="me-5 position-relative">
+                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="{{user.first_name}} {{user.last_name}}">
+                    {% if user.profile.photo %}
+                    <img alt="Pic" src="{{ user.profile.photo.url }}">
+                    {% else %}
+                    <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{user.first_name|upfirstletter}}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="fw-bold">
+                <a href="{% url 'profile_view' user.pk %}" class="fs-5 text-gray-900 text-hover-primary">{{user.first_name}} {{user.last_name}}</a>
+            </div>
+        </div>
+    </span>
+</div>

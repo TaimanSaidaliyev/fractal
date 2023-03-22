@@ -1,0 +1,93 @@
+{% load project_tags %}
+<div class="row">
+    <div class="d-flex align-items-center collapsible py-3 toggle mb-0 collapsed col col-auto pe-0" data-bs-toggle="collapse" data-bs-target="#kt_time_tracking" aria-expanded="true">
+        <span class="text-dark fs-4 me-3 fw-bolder cursor-pointer">Потраченное время
+            {% if summ.spent_time__sum %}
+            ({{summ.spent_time__sum}} часов)
+            {% else %}
+            (0)
+            {% endif %}
+        </span>
+        <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+            <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
+            <span class="svg-icon toggle-off svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
+                    <rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor"></rect>
+                    <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+            <!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
+            <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
+                    <rect x="6.0104" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </div>
+    </div>
+
+    <span data-bs-toggle="modal" data-bs-target="#kt_modal_add_time_tracking" class="col col-auto d-flex text-primary text-hover-warning me-3 cursor-pointer mt-5" data-bs-toggle="tooltip" data-bs-placement="top">
+        Добавить
+    </span>
+</div>
+
+<div id="kt_time_tracking" class="fs-6 collapse" style="">
+    <div class="accordion accordion-icon-toggle" id="kt_accordion_1">
+        <div class="m-0">
+            <table class="table table-row-dashed table-hover table-row-gray-300 align-middle gs-0 gy-2">
+            {% for tracking in time_tracking %}
+                <tr>
+                    <td>
+                        <div class="d-flex">
+                            <span class="text-dark fs-6">
+                                <div class="d-flex align-items-center">
+                                    <!--begin::Avatar-->
+                                    <div class="me-5 position-relative">
+                                        <div class="symbol symbol-35px symbol-circle">
+                                            {% if tracking.author.profile.photo %}
+                                            <img alt="Pic" src="{{ tracking.author.profile.photo.url }}">
+                                            {% else %}
+                                            <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{tracking.author.first_name|upfirstletter}}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <!--end::Avatar-->
+                                    <!--begin::Details-->
+                                    <div class="fw-bold">
+                                        <a href="{% url 'profile_view' tracking.author.pk%}" class="fs-5 text-gray-900 text-hover-primary">{{tracking.author.first_name}} {{tracking.author.last_name}}</a>
+                                    </div>
+                                    <!--end::Details-->
+                                </div>
+                            </span>
+					    </div>
+                    </td>
+                    <td class="fw-bold text-gray-600 text-center">
+                        {{tracking.track_date}}
+                    </td>
+                    <td class="fw-bold text-gray-600 text-center">
+                        {{tracking.spent_time}}
+                    </td>
+                    <td class="fw-bold text-gray-600 text-left min-w-200px">
+                        {{tracking.description}}
+                    </td>
+                    <td class="text-end min-w-200px">
+                        <a href="{% url 'delete_time_tracking' tracking.pk %}">
+                            <span class="cursor-pointer text-gray-600 fw-bold text-hover-danger pe-5" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Удалить">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                </svg>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                Время не зарегистрировано
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<div class="separator separator-dashed"></div>

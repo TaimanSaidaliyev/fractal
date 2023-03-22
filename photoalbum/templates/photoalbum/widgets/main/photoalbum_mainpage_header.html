@@ -1,0 +1,5 @@
+{% load photoalbum_tags %}
+<div class="card-rounded bg-white d-flex flex-stack flex-wrap p-5">
+    {% show_photoalbum_categories_horizontal request category_id %}
+    <a href="{% url 'photoalbum_add' %}" class="btn btn-outline btn-sm btn-outline-primary btn-active-light-primary me-2 mb-2">Добавить альбом</a>
+</div>

@@ -1,0 +1,15 @@
+<div id="kt_user_view_details" class="collapse">
+    <form class="form" action="{% url 'photoalbum_upload_items' photoalbum.pk %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="alert alert-primary d-flex align-items-center p-5">
+            <div class="d-flex flex-wrap">
+                <div class="d-flex flex-column me-3">
+                    {{ upload_items_form.image }}
+                </div>
+                <div class="d-flex flex-column">
+                    <button type="submit" class="btn btn-primary">Загрузить</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

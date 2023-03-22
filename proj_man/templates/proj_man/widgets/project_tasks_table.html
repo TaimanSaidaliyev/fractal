@@ -1,0 +1,85 @@
+{% load project_tags %}
+<table class="table table-row-dashed table-hover table-row-gray-300 align-middle gs-0 gy-2">
+<!--begin::Table head-->
+    <thead>
+        <tr class="fw-bolder text-muted">
+            <th class="min-w-50px">
+                <div class="d-flex justify-content-center">
+                    Статус
+                </div>
+            </th>
+            <th class="min-w-150px">Задача</th>
+            <th class="min-w-100px">
+                <div class="d-flex justify-content-center">
+                    Проект
+                </div>
+            </th>
+            <th class="min-w-100px">
+                <div class="d-flex justify-content-center">
+                    Приоритет
+                </div>
+            </th>
+            <th class="min-w-100px">
+                <div class="d-flex justify-content-center">
+                    Прогресс
+                </div>
+            </th>
+            <th class="min-w-150px">
+                <div class="d-flex justify-content-center">
+                    Срок
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <!--end::Table head-->
+    <!--begin::Table body-->
+    <tbody>
+    {% for task in tasks_list %}
+    <tr>
+    <td>
+        <div class="d-flex justify-content-center">
+            <span class="{{task.status.css_color}}">{{task.status}}</span>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex align-items-center">
+            <div class="d-flex justify-content-start flex-column">
+                <a href="{% url 'projects_task_detail' task.pk %}" class="{%if task.is_completed %}text-success text-hover-success {% else %}text-dark text-hover-primary {% endif %}fs-6" >
+                    {{ task.title }}
+                </a>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'projects_tasks_list' task.project.pk %}" class="text-dark text-hover-primary fs-6">{{task.project.title}}</a>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex justify-content-center">
+            <span class="{{task.priority.css_color}}">{{task.priority}}</span>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex flex-column w-100 me-2">
+            <div class="progress h-6px w-100">
+                <div class="progress-bar {% show_task_progress task.pk %}" role="progressbar" style="width: {{task.progress}}%" aria-valuenow="{{task.progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </td>
+    <td class="text-end">
+        <div class="d-flex justify-content-center">
+            {% if task.remind_me.is_coming == 0 %}
+            <span class="text-dark fs-6">{{task.edate}}</span>
+            {% elif task.remind_me.is_coming == 1 %}
+            <span class="fs-6 text text-warning" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="На грани просрочки">{{task.edate}}</span>
+            {% else %}
+            <span class="fs-6 text text-danger" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="Задача просрочена">{{task.edate}}</span>
+            {% endif %}
+        </div>
+    </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+<!--end::Table body-->
+</table>

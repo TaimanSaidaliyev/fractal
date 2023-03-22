@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ news_item.title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+  {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load news_tags %}
+{% load sidebar_last_news %}
+{% load news_widgets %}
+
+{% block content %}
+<!--begin::Post card-->
+<form method="POST">
+{% csrf_token %}
+    <button type="submit">Удалить статью</button>>
+</form>
+<!--end::Post card-->
+{% endblock %}

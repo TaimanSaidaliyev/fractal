@@ -1,0 +1,171 @@
+{% load project_tags %}
+{% load common_user_list %}
+<div class="pt-lg-10 pe-lg-10 ps-lg-10 pt-lg-0">
+
+<!--begin::Details-->
+	<div class="d-flex flex-wrap flex-sm-nowrap mb-6">
+		<!--begin::Image-->
+		<div class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-100px h-lg-100px me-7 mb-4">
+			<div class="symbol">
+			{% if project.photo %}
+			<img class="w-100px h-100px" src="{{project.photo.url}}" alt="image">
+			{% else %}
+			<span class="symbol-label w-100px h-100px fs-1 bg-light-warning text-warning">{{project.title|upfirstletter}}</span>
+			{% endif %}
+			</div>
+		</div>
+		<!--end::Image-->
+		<!--begin::Wrapper-->
+		<div class="flex-grow-1">
+			<!--begin::Head-->
+			<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+				<!--begin::Details-->
+				<div class="d-flex flex-column">
+					<!--begin::Status-->
+					<div class="d-flex align-items-center mb-1">
+						<a href="#" class="text-gray-800 text-hover-primary fs-2 me-3">{{project.title}}</a>
+						<span class="{{project.status.css_color}} me-auto">{{project.status}}</span>
+					</div>
+					<!--end::Status-->
+					<!--begin::Description-->
+					<div class="d-flex flex-wrap fw-bold mb-4 fs-5 text-gray-400">{% autoescape off %}{{project.description|truncatewords:30|striptags}}{% endautoescape %}</div>
+					<!--end::Description-->
+				</div>
+				{% show_user_small_balls_list request project.participants.all 5 %}
+				<!--end::Details-->
+				<!--begin::Actions-->
+				<div class="d-flex mb-4">
+					<a data-bs-toggle="modal" data-bs-target="#kt_modal_project_user_list" class="btn btn-sm btn-bg-light btn-active-color-primary me-3">Добавить участника</a>
+					<div class="modal fade" tabindex="-1" id="kt_modal_project_user_list">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title">Участники</h3>
+									<!--begin::Close-->
+									<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+										<span class="svg-icon svg-icon-1"></span>
+									</div>
+									<!--end::Close-->
+								</div>
+								<div class="modal-body">
+									<form action="{% url 'add_project_users' project.pk %}" method="POST">
+										{% csrf_token %}
+										<div class="col col-lg-12">
+											<div class="form-group">
+												<label for="{{ form_project_user.participants.id_for_label }}" class="mt-5">Связанные задачи</label>
+												{{ form_project_user.participants }}
+												<div class="invalid-feedback">
+													{{ form_project_user.participants.errors }}
+												</div>
+											</div>
+										</div>
+										<button class="btn btn-primary btn-sm mt-5" type="submit">Сохранить</button>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a href="{% url 'projects_task_add' project.pk %}" class="btn btn-sm btn-primary me-3">Добавить задачу</a>
+					<!--begin::Menu-->
+					<div class="me-0">
+						<button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+							<i class="bi bi-three-dots fs-3"></i>
+						</button>
+						<!--begin::Menu 3-->
+						<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3" data-kt-menu="true" style="">
+							<!--begin::Heading-->
+							<div class="menu-item px-3">
+								<div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Опции</div>
+							</div>
+							<!--end::Heading-->
+							<!--begin::Menu item-->
+							<div class="menu-item px-3">
+								<form action="{% url 'project_delete' project.pk %}" method="POST">
+									{% csrf_token %}
+									<button type="submit" class="btn menu-link px-3 w-100">Удалить проект</button>
+								</form>
+							</div>
+							<div class="menu-item px-3">
+								<a href="{% url 'project_update' project.pk %}" type="submit" class="btn menu-link px-3">Редактировать</a>
+							</div>
+							<!--end::Menu item-->
+							<!--begin::Menu item-->
+							<div class="menu-item px-3">
+								<form action="{% url 'project_delete_completely' project.pk %}" method="POST">
+									{% csrf_token %}
+									<button type="submit" class="btn menu-link px-3 w-100 text-danger">Уничтожить проект</button>
+								</form>
+							</div>
+							<!--end::Menu item-->
+							<!--begin::Menu item-->
+							<div class="menu-item px-3">
+								<a href="#" class="menu-link px-3">Generate Bill</a>
+							</div>
+							<!--end::Menu item-->
+							<!--begin::Menu item-->
+							<div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end">
+								<a href="#" class="menu-link px-3">
+									<span class="menu-title">Subscription</span>
+									<span class="menu-arrow"></span>
+								</a>
+								<!--begin::Menu sub-->
+								<div class="menu-sub menu-sub-dropdown w-175px py-4" style="">
+									<!--begin::Menu item-->
+									<div class="menu-item px-3">
+										<a href="#" class="menu-link px-3">Plans</a>
+									</div>
+									<!--end::Menu item-->
+									<!--begin::Menu item-->
+									<div class="menu-item px-3">
+										<a href="#" class="menu-link px-3">Billing</a>
+									</div>
+									<!--end::Menu item-->
+									<!--begin::Menu item-->
+									<div class="menu-item px-3">
+										<a href="#" class="menu-link px-3">Statements</a>
+									</div>
+									<!--end::Menu item-->
+									<!--begin::Menu separator-->
+									<div class="separator my-2"></div>
+									<!--end::Menu separator-->
+									<!--begin::Menu item-->
+									<div class="menu-item px-3">
+										<div class="menu-content px-3">
+											<!--begin::Switch-->
+											<label class="form-check form-switch form-check-custom form-check-solid">
+												<!--begin::Input-->
+												<input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications">
+												<!--end::Input-->
+												<!--end::Label-->
+												<span class="form-check-label text-muted fs-6">Recuring</span>
+												<!--end::Label-->
+											</label>
+											<!--end::Switch-->
+										</div>
+									</div>
+									<!--end::Menu item-->
+								</div>
+								<!--end::Menu sub-->
+							</div>
+							<!--end::Menu item-->
+							<!--begin::Menu item-->
+							<div class="menu-item px-3 my-1">
+								<a href="#" class="menu-link px-3">Settings</a>
+							</div>
+							<!--end::Menu item-->
+						</div>
+						<!--end::Menu 3-->
+					</div>
+					<!--end::Menu-->
+				</div>
+				<!--end::Actions-->
+			</div>
+			<!--end::Head-->
+		</div>
+		<!--end::Wrapper-->
+	</div>
+	<!--end::Details-->
+</div>

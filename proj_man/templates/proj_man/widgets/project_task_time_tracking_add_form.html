@@ -1,0 +1,19 @@
+<div class="card-body">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <label class="mb-2">Дата</label>
+            {{form.track_date}}
+        </div>
+        <div class="col-md-6">
+            <label class="mb-2">Затраченное время</label>
+            {{form.spent_time}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 pt-10">
+            <label class="mb-2">Описание</label>
+            {{form.description}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,854 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>W3C Example Table</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>
+			<!--begin::Table head-->
+			<thead>
+				<tr class="fw-bolder text-muted">
+					<th class="min-w-50px">
+						<div class="d-flex justify-content-center">
+							Статус
+						</div>
+					</th>
+					<th class="min-w-150px">Задача</th>
+					<th class="min-w-100px">
+						<div class="d-flex justify-content-center">
+							Приоритет
+						</div>
+					</th>
+					<th class="min-w-100px">
+						<div class="d-flex justify-content-center">
+							Прогресс
+						</div>
+					</th>
+					<th class="min-w-150px">
+						<div class="d-flex justify-content-center">
+							Срок
+						</div>
+					</th>
+					<th class="min-w-150px text-end">
+						<div class="d-flex justify-content-center">
+							Исполнитель
+						</div>
+					</th>
+
+				</tr>
+			</thead>
+			<!--end::Table head-->
+			<!--begin::Table body-->
+			<tbody>
+			
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Открытый</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/1" class="text-dark text-hover-primary fs-6" style="margin-left: 0px">
+								
+								Создать Систему управления проектами
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Низкий</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">10 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/02/photo_5319101762856140429_x.jpg">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/4" class="fs-5 text-gray-900 text-hover-primary">Аскарбек Толеубеков</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+					
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Открытый</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/2" class="text-dark text-hover-primary fs-6" style="margin-left: 30px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Управление проектами
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-danger">Немедленный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">4 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+					
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Открытый</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/120" class="text-dark text-hover-primary fs-6" style="margin-left: 60px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Выгрузка задач в Excel
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-secondary">Нормальный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">23 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+				
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Открытый</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/18" class="text-dark text-hover-primary fs-6" style="margin-left: 60px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Навести красоту в форме ввода задач
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-warning">Срочный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">12 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/09/30/WhatsApp_Image_2022-09-30_at_14.29.07.jpeg">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/5" class="fs-5 text-gray-900 text-hover-primary">Алтынай Турғамбаева</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+					
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Открытый</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/111" class="text-dark text-hover-primary fs-6" style="margin-left: 90px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Фильтрация зависимостей в форме создания задачи
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-secondary">Нормальный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">20 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+				
+					
+				
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Открытый</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/112" class="text-dark text-hover-primary fs-6" style="margin-left: 60px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Сделать корзину
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-secondary">Нормальный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">24 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+				
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-success">Выполнено</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/3" class="text-success text-hover-success fs-6" style="margin-left: 60px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Создать комментарии к каждой задаче
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-secondary">Нормальный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">11 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+					
+					
+				
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Открытый</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/110" class="text-dark text-hover-primary fs-6" style="margin-left: 60px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Создать историю действий пользователей касательно задачи
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-warning">Высокий</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">19 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+					
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-success">Выполнено</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/108" class="text-success text-hover-success fs-6" style="margin-left: 90px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Удаление комментарий
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-warning">Высокий</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">16 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+				
+					
+				
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Открытый</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/24" class="text-dark text-hover-primary fs-6" style="margin-left: 60px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Страница проекта
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-primary">Низкий</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">13 мая 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/09/30/WhatsApp_Image_2022-09-30_at_14.29.07.jpeg">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/5" class="fs-5 text-gray-900 text-hover-primary">Алтынай Турғамбаева</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+				
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-success">Выполнено</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/7" class="text-success text-hover-success fs-6" style="margin-left: 60px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Файловый менеджер для Управления проектами
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-secondary">Нормальный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">16 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+					
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-success">Выполнено</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/109" class="text-success text-hover-success fs-6" style="margin-left: 90px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Создать глобальный файловый менеджер
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-secondary">Нормальный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">17 октября 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/10/my_avatar.png">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/6" class="fs-5 text-gray-900 text-hover-primary">Тайман Сайдалиев</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+				
+					
+				
+				<tr>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-light-success">Выполнено</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-start flex-column">
+							<a href="/proj_man/task/26" class="text-success text-hover-success fs-6" style="margin-left: 60px">
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"></path>
+								</svg>
+								
+								Функционал удаления записей задач
+							</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="badge badge-secondary">Нормальный</span>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column w-100 me-2">
+						<div class="progress h-6px w-100">
+							<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex justify-content-center">
+						<span class="text-dark fs-6">13 мая 2022 г.</span>
+					</div>
+				</td>
+				<td class="text-end">
+					<div class="d-flex">
+						<span class="text-dark fs-6">
+							<div class="d-flex align-items-center">
+								<!--begin::Avatar-->
+								<div class="me-5 position-relative">
+									<div class="symbol symbol-35px symbol-circle">
+										
+										<img alt="Pic" src="/media/photos/2022/10/02/photo_5319101762856140428_m.jpg">
+										
+									</div>
+								</div>
+								<!--end::Avatar-->
+								<!--begin::Details-->
+								<div class="fw-bold">
+									<a href="/profile/3" class="fs-5 text-gray-900 text-hover-primary">Шерхан Калубекулы</a>
+								</div>
+								<!--end::Details-->
+							</div>
+						</span>
+					</div>
+				</td>
+				</tr>
+				
+				
+					
+				
+					
+				
+			</tbody>
+			<!--end::Table body-->
+		</table></body></html>

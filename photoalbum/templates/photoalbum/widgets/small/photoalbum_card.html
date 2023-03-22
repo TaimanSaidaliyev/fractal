@@ -1,0 +1,45 @@
+{% load photoalbum_tags %}
+<div class="col-md-4 col-sm-6 col-xxl-3">
+        <div class="card-body text-center pb-5">
+            {% if album.image %}
+            <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{album.image.url}}">
+                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mb-7" style="height: 160px;background-image:url('{{album.image_thumbnail_300_200.url}}"></div>
+                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                    <i class="bi bi-eye-fill fs-2x text-white"></i>
+                </div>
+            </a>
+            {% else %}
+            <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="123">
+                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mb-7" style="height: 160px;background-image:url('123')"></div>
+                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                    <i class="bi bi-eye-fill fs-2x text-white"></i>
+                </div>
+            </a>
+            {% endif %}
+            <div class="d-flex align-items-end flex-stack mb-1">
+                <div class="text-start">
+                    <a href="{% url 'photoalbum_items' album.pk %}">
+                        <span class="fw-bolder text-gray-800 cursor-pointer text-hover-primary fs-4 d-block">{{album.title}}</span>
+                    </a>
+                    <span class="text-gray-400 mt-1 fw-bolder fs-6">Дата: {{album.event_at}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex flex-stack pt-0">
+            <a href="{% url 'photoalbum_items' album.pk %}" class="btn btn-sm btn-primary flex-shrink-0 me-2">Открыть альбом</a>
+            <div class="ms-2" data-kt-filemanger-table="copy_link">
+                <button type="button" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                    Ссылка
+                </button>
+                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-300px" data-kt-menu="true" style="">
+                    <div class="card card-flush">
+                        <div class="card-body p-5">
+                            <div class="d-flex" data-kt-filemanger-table="copy_link_generator">
+                                <input class="form-control" value="{% url 'photoalbum_items' album.pk %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

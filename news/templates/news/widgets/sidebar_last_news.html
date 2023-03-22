@@ -1,0 +1,19 @@
+{% for item in last_news %}
+<div class="d-flex flex-stack mb-7">
+    <!--begin::Symbol-->
+    <div class="symbol symbol-60px symbol-2by3 me-4">
+        {% if item.photo %}
+        <div class="symbol-label" style="background-image: url('{{item.photo.url}}')"></div>
+        {% else %}
+        <div class="symbol-label" style="background-image: url('https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/1600x800/img-1.jpg')"></div>
+        {% endif %}
+    </div>
+    <!--end::Symbol-->
+    <!--begin::Title-->
+    <div class="m-0">
+        <a href="{{ item.get_absolute_url }}" class="text-dark fw-bold text-hover-primary fs-6">{{item.title|truncatewords:5}}</a>
+        <span class="text-gray-600 fw-semibold d-block pt-1 fs-7">{{item.content|truncatewords:5|striptags}}</span>
+    </div>
+    <!--end::Title-->
+</div>
+{% endfor %}

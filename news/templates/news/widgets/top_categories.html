@@ -1,0 +1,21 @@
+<!--end::Menu-->
+<div class="card-rounded bg-white d-flex flex-stack flex-wrap p-5">
+	<!--begin::Nav-->
+	<ul class="nav flex-wrap border-transparent fw-bold">
+		<div class="nav-item my-1">
+			<span class="btn btn-color-black fw-bolder fs-8 fs-lg-base px-3 mx-1 text-uppercase">Категория</span>
+		</div>
+		{% for item in categories %}
+		<!--begin::Nav item-->
+		<li class="nav-item my-1">
+			<a class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 mx-1 text-uppercase" href="{% url 'category' item.pk%}">{{item.title}}</a>
+		</li>
+		<!--end::Nav item-->
+		{% endfor %}
+
+	</ul>
+	<!--end::Nav-->
+	<!--begin::Action-->
+	<a href="{% url 'add_news' %}" class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary me-2 mb-2">Добавить новость</a>
+	<!--end::Action-->
+</div>

@@ -1,0 +1,57 @@
+#QuerySet SQL
+News.objects.all() - вытаскивает все записи что есть в этой модели
+News.objects.all().reverse - вытаскивает по pk в сортировке
+News.objects.get(pk='1') - вытаскивает только одну запись, в скобках указываем фильтр
+News.objects.all()[:3] - ТОП 3 записей из модели
+News.objects.all()[3:] - игнорирует первые 3 записи из модели
+News.objects.all()[3:5] - в промежутке
+
+news = News.objects.get(pl='1') - можем определенную запись определить в переменной со всеми полями этой модели
+news.title - покажет именно наименование по атрибуту title по этой записи, которую мы определили выше
+
+Category.news_set.all() - вытаскивает все связанные новости по этой категории
+(<название модели или объявленная переменная Категории>.<название связанной модели> + _set.all())
+
+Category.get_news.all() - пишем get_news, если определили в модели (models.py - Category) related_name
+Category.objects.filter(get_news__title__contains='Токаев') - вытаскивает все категории, где встречается слово Токаев
+Category.objects.filter(get_news__title__contains='Токаев').distinct() - Исключает дубликаты
+
+
+News.objects.filter(pk__gt = 4) - SELECT * FROM News where pk > 4
+News.objects.filter(pk__gte = 4) - SELECT * FROM News where pk >= 4
+News.objects.filter(pk__lt = 4) - SELECT * FROM News where pk < 4
+News.objects.filter(pk__lte = 4) - SELECT * FROM News where pk <= 4
+News.objects.filter(pk__in = [4, 5]) - SELECT * FROM News where pk in 4,5
+News.objects.filter(pk__in = [4, 5], title__contains='формы') - SELECT * FROM News where pk in 4,5 and title like '%формы%'
+News.objects.filter(title__contains = 'New') - SELECT * FROM News where title = '%New%'
+News.objects.filter(title__icontains = 'New') - SELECT * FROM News where title = '%New%' - без учета регистра
+News.objects.get(pk=8).get_next_by_created_at() - показывает следующую запись по полю created_at после pk = 8
+News.objects.filter(category = 5).count() - показывает количество записей
+
+
+News.objects.order_by('pk').first() - Отсортирует pk и возьмет первую запись
+News.objects.order_by('pk').last() - Отсортирует pk и возьмет первую запись
+
+
+#Оператор ИЛИ
+from django.db.models import Q
+| - ИЛИ & - И ~ - НЕ
+News.objects.filter(Q(pk__in = [5,6]) | Q(title__contains='Токаев'))
+News.objects.filter(~Q(title__contains='Токаев')) - знак ~ означает что исключит все новости с словом Токаев
+
+#MAX, MIN
+from django.db.models import *
+News.objects.aggregate(min_views = Min('views'), max_views = Max('views')) где min_views, max_views это просто наименования которые мы задаем
+
+#Посчет количества новостей по категориям Annotate
+cats = Category.objects.annotate(cnt(Count='get_news')) #cnt это просто переменная, которая приняла на себя функцию в скобке
+    for item in cats
+        print(item.title, item.cnt)
+
+#Подсчет количество просмотров
+from.django.db.models import F
+news.views = F('views') + 1
+news.save()
+
+#Чистый SQL
+News.object.raw("SELECT * FROM news_news")

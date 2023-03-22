@@ -1,0 +1,45 @@
+<div class="row g-10">
+{% for topnews in topnews %}
+{% if topnews.is_published %}
+  <!--begin::Col-->
+  <div class="col-md-4">
+      <!--begin::Feature post-->
+      <div class="card-xl-stretch me-md-6">
+          <!--begin::Image-->
+          {% if topnews.photo %}
+          <a class="d-block bgi-no-repeat bgi-size-cover bgi-position-center card-rounded position-relative min-h-175px mb-5" style="background-image:url({{ topnews.photo.url }})" data-fslightbox="lightbox-video-tutorials" href="{{ topnews.get_absolute_url }}">
+              <img src="assets/media/svg/misc/video-play.svg" class="position-absolute top-50 start-50 translate-middle" alt="">
+          </a>
+          {% else %}
+          <a class="d-block bgi-no-repeat bgi-size-cover bgi-position-center card-rounded position-relative min-h-175px mb-5" style="background-image:url(https://preview.keenthemes.com/metronic8/demo1/assets/media/stock/1600x800/img-1.jpg)" data-fslightbox="lightbox-video-tutorials" href="{{ topnews.get_absolute_url }}">
+              <img src="assets/media/svg/misc/video-play.svg" class="position-absolute top-50 start-50 translate-middle" alt="">
+          </a>
+          {% endif %}
+          <!--end::Image-->
+          <!--begin::Body-->
+          <div class="m-0">
+              <!--begin::Title-->
+              <a href="{{ topnews.get_absolute_url }}" class="fs-4 text-dark fw-bolder text-hover-primary text-dark lh-base">{{ topnews.title }}</a>
+              <!--end::Title-->
+              <!--begin::Text-->
+              <div class="fw-bold fs-5 text-gray-600 text-dark my-4">{{ topnews.content|truncatewords:20|striptags }}</div>
+              <!--end::Text-->
+              <!--begin::Content-->
+              <div class="fs-6 fw-bolder">
+                  <!--begin::Author-->
+                  <a href="{% url 'profile_view' topnews.author.pk %}" class="text-gray-700 text-hover-primary">{{topnews.author.first_name}} {{topnews.author.last_name}}</a>
+                  <!--end::Author-->
+                  <!--begin::Date-->
+                  <span class="text-muted">{{ topnews.created_at|date:"d.m.Y H:i" }}</span>
+                  <!--end::Date-->
+              </div>
+              <!--end::Content-->
+          </div>
+          <!--end::Body-->
+      </div>
+      <!--end::Feature post-->
+  </div>
+  <!--end::Col-->
+  {% endif %}
+{% endfor %}
+</div>

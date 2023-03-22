@@ -1,0 +1,393 @@
+{% extends 'base_type/base_version_2.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% load project_task_history %}
+{% load project_task_approve %}
+{% block content %}
+{% load common_files %}
+{% load common_comments %}
+<div class="row me-0 h-100">
+    <div class="col col-lg-2 border border-top-0 border-left-0 border-bottom-0 border-right-1 pe-0" style="background: #FAFBFC;">
+		{% show_proj_man_sidebar request page_type category %}
+    </div>
+    <div class="col col-md-10 ps-10 pt-5 pe-5">
+		<div class="d-flex flex-column flex-xl-row">
+        <!--begin::Wrapper-->
+			<div class="flex-lg-row-fluid me-xl-15">
+				{% show_approve_status_send_to_review request task.pk %}
+				{% show_approve_status_send_to_approval request task.pk %}
+				<span class="text-primary fw-bolder"><a href="{% url 'projects_tasks_list' task.project.pk %}">< Проект: {{task.project.title}}</a></span>
+					<!--begin::Message header-->
+					<div class="d-flex flex-wrap gap-2 justify-content-between mb-8">
+						<div class="d-flex align-items-center flex-wrap gap-2">
+							<!--begin::Heading-->
+							<h2 class="fw-bold me-3 my-1">{{task.title}}</h2>
+							<!--begin::Heading-->
+							<!--begin::Badges-->
+							<span class="{{task.status.css_color}}">{{task.status}}</span>
+							<span class="{{task.priority.css_color}}">{{task.priority}}</span>
+							<!--end::Badges-->
+						</div>
+						<div class="float-end">
+							{% show_approve_status_default request task.pk %}
+							<a href="{% url 'projects_sub_task_add' task.project.pk task.pk %}" class="btn btn-light-primary btn-sm">
+							  Добавить подзадачу
+							</a>
+						</div>
+					</div>
+					<div class="d-flex flex-wrap gap-2 flex-stack" data-kt-inbox-message="header">
+						<!--begin::Author-->
+						<div class="d-flex align-items-center">
+							<!--begin::Avatar-->
+							<div class="symbol symbol-50 me-4">
+								{% if task.author.profile.photo %}
+								<span class="symbol-label" style="background-image:url({{task.author.profile.photo.url}});"></span>
+								{% else %}
+								<div class="symbol-label fs-3 bg-light-warning text-warning">
+									{{task.author.first_name|upfirstletter}}</div>
+								{% endif %}
+							</div>
+							<!--end::Avatar-->
+							<div class="pe-5">
+								<!--begin::Author details-->
+								<div class="d-flex align-items-center flex-wrap gap-1">
+									<a href="{% url 'profile_view' task.author.pk %}" class="fw-bolder text-dark text-hover-primary">{{task.author.first_name}}
+										{{task.author.last_name}}</a>
+								</div>
+								<!--end::Author details-->
+								<!--begin::Message details-->
+								<div data-kt-inbox-message="details">
+									<span class="text-muted fw-bold">{{task.created_at}}</span>
+								</div>
+								<!--end::Message details-->
+								<!--begin::Preview message-->
+								<div class="text-muted fw-bold mw-450px d-none" data-kt-inbox-message="preview">With
+									resrpect, i must disagree with Mr.Zinsser. We all know the most part of important
+									part....
+								</div>
+								<!--end::Preview message-->
+							</div>
+						</div>
+						<!--end::Author-->
+						<!--begin::Actions-->
+						<div class="d-flex align-items-center flex-wrap gap-2">
+							<!--begin::Date-->
+							<span class="fw-bold text-muted text-end me-3">Обновлено: {{task.updated_at}}</span>
+							<!--end::Date-->
+							<div class="d-flex">
+								<!--begin::Mark as important-->
+								{% if saved %}
+								<a href="{% url 'projects_task_save' task.pk %}" class="btn btn-sm btn-icon btn-clear btn-light-primary btn-active-light-primary me-3"
+								   data-bs-toggle="tooltip" data-bs-placement="top" title=""
+										data-bs-original-title="Убрать из сохраненных">
+								{% else %}
+								<a href="{% url 'projects_task_save' task.pk %}" class="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3"
+								   data-bs-toggle="tooltip" data-bs-placement="top" title=""
+								   data-bs-original-title="Сохранить к себе">
+								{% endif %}
+									<!--begin::Svg Icon | path: icons/duotune/general/gen056.svg-->
+									<span class="svg-icon svg-icon-2 m-0">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+											 fill="none">
+											<path d="M16.0077 19.2901L12.9293 17.5311C12.3487 17.1993 11.6407 17.1796 11.0426 17.4787L6.89443 19.5528C5.56462 20.2177 4 19.2507 4 17.7639V5C4 3.89543 4.89543 3 6 3H17C18.1046 3 19 3.89543 19 5V17.5536C19 19.0893 17.341 20.052 16.0077 19.2901Z"
+												  fill="currentColor"></path>
+										</svg>
+									</span>
+									<!--end::Svg Icon-->
+								</a>
+								<!--end::Mark as important-->
+								<!--begin::Reply-->
+								<a href="{% url 'projects_task_update' task.pk %}" class="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3"
+								   data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Редактировать">
+									<!--begin::Svg Icon | path: icons/duotune/general/gen055.svg-->
+									<span class="svg-icon svg-icon-2 m-0">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+											 fill="none">
+											<path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd"
+												  d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z"
+												  fill="currentColor"></path>
+											<path d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z"
+												  fill="currentColor"></path>
+											<path d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
+												  fill="currentColor"></path>
+										</svg>
+									</span>
+									<!--end::Svg Icon-->
+								</a>
+								<a href="{% url 'copy_project_task' task.pk task.project.pk %}" class="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3"
+								   data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Копировать задачу">
+									<!--begin::Svg Icon | path: icons/duotune/general/gen055.svg-->
+									<span class="svg-icon svg-icon-2 m-0">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
+										  <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z"/>
+										</svg>
+									</span>
+									<!--end::Svg Icon-->
+								</a>
+								<!--end::Reply-->
+								<div class="modal fade" tabindex="-1" id="kt_modal_add_time_tracking">
+									<form action="{% url 'add_time_tracking_by_task' task.pk %}" method="POST">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h3 class="modal-title">Добавить время исполнения</h3>
+													<!--begin::Close-->
+													<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+														<span class="svg-icon svg-icon-1"></span>
+													</div>
+													<!--end::Close-->
+												</div>
+												<div class="modal-body">
+													{% show_add_time_tracking_by_task request task.pk %}
+												</div>
+												<div class="modal-footer">
+													<button class="btn btn-warning">Добавить время</button>
+													<button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<!--begin::Delete-->
+								<a data-bs-toggle="modal" data-bs-target="#kt_modal_4" class="btn btn-sm btn-icon btn-clear btn-active-light-danger me-3"
+								data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Удалить задачу">
+									<!--begin::Svg Icon | path: icons/duotune/general/gen055.svg-->
+									<span class="svg-icon svg-icon-2 m-0">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+										<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+										<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+										<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+									</svg>
+									</span>
+								</a>
+								<div class="modal fade" tabindex="-1" id="kt_modal_4">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h3 class="modal-title">Вы подтверждаете удаление?</h3>
+												<!--begin::Close-->
+												<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+													<span class="svg-icon svg-icon-1"></span>
+												</div>
+												<!--end::Close-->
+											</div>
+											<div class="modal-body">
+												<p class="text-dark">Удаление категории не подлежит восстановлению.
+													Задачи, которые были добавлены в эту категорию не буду удалены, но данная категория больше не будет существовать.
+													Вы подтверждаете удаление?</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+												<a href="{% url 'projects_task_delete' task.pk %}" class="btn btn-danger">Удалить задачу</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--end::Delete-->
+							</div>
+						</div>
+						<!--end::Actions-->
+					</div>
+					<!--end::Message header-->
+					<!--begin::Message content-->
+					<div class="py-5">
+						<p>{% autoescape off %}{{task.description}}{% endautoescape %}</p>
+					</div>
+
+
+					<div>{% show_answer request task.pk %}</div>
+					<!--end::Message content-->
+					{% show_related_tasks request task.pk %}
+					<div class="separator separator-dashed"></div>
+					<!--begin::File content-->
+					{% show_module_record_files request task.pk %}
+					{% show_time_tracking_by_task request task.pk %}
+					<!--end::File content-->
+					<!--begin::Section-->
+					{% show_user_comments request task.pk module_id %}
+					<div class="m-0">
+						<!--begin::Heading-->
+						<div class="d-flex align-items-center collapsible py-3 toggle mb-0 collapsed" data-bs-toggle="collapse" data-bs-target="#kt_job_5_1" aria-expanded="false">
+							<!--begin::Title-->
+							<span class="text-dark fs-4 me-3 fw-bolder cursor-pointer">История изменений</span>
+							<!--end::Title-->
+							<!--begin::Icon-->
+							<div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+								<!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
+								<span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
+										<rect x="6.0104" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
+									</svg>
+								</span>
+								<!--end::Svg Icon-->
+								<!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
+								<span class="svg-icon toggle-off svg-icon-1">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
+										<rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor"></rect>
+										<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
+									</svg>
+								</span>
+								<!--end::Svg Icon-->
+							</div>
+							<!--end::Icon-->
+						</div>
+						<!--end::Heading-->
+						<!--begin::Body-->
+						<div id="kt_job_5_1" class="fs-6 collapse" style="">
+							{% show_task_history task.id%}
+						</div>
+						<!--end::Content-->
+						<!--begin::Separator-->
+						<div class="separator separator-dashed"></div>
+						<!--end::Separator-->
+					</div>
+					<!--end::Section-->
+				</div>
+			<div class="flex-column flex-lg-row-auto w-100 w-xl-300px mb-10 border border-1 border-left-1 border-top-0 border-bottom-0 border-right-0">
+				<div class="m-10 bg-body flex-grow-1">
+					<div class="fs-4 fw-bolder mb-5">Сроки</div>
+					<!--begin::Row-->
+					<div class="row g-0 mt-8">
+						<!--begin::Col-->
+						<div class="col mr-8">
+							<!--begin::Label-->
+							<div class="fs-7 text-muted fw-bold">Начало</div>
+							<!--end::Label-->
+							<!--begin::Stat-->
+							<div class="fs-4 fw-bolder">{{task.bdate|date:"M d, Y"}}</div>
+							<!--end::Stat-->
+						</div>
+						<!--end::Col-->
+						<!--begin::Col-->
+						<div class="col">
+							<!--begin::Label-->
+							<div class="fs-7 text-muted fw-bold">Срок</div>
+							<!--end::Label-->
+							<!--begin::Stat-->
+							<div class="d-flex align-items-center">
+								<div class="fs-4 fw-bolder">{{task.edate|date:"M d, Y"}}</div>
+							</div>
+							<!--end::Stat-->
+						</div>
+						<!--end::Col-->
+					</div>
+					<!--end::Row-->
+				</div>
+				<div class="m-10 bg-body flex-grow-1">
+					<!--begin::Row-->
+					{% show_task_hierarchy task.pk %}
+					<!--end::Row-->
+				</div>
+				<div class="m-10 bg-body flex-grow-1">
+					<div class="fs-4 fw-bolder mb-5">Исполнитель</div>
+					<div class="d-flex align-items-center mb-5">
+						<!--begin::Avatar-->
+						<div class="symbol symbol-50 me-4">
+							{% if task.executor.profile.photo %}
+							<span class="symbol-label" style="background-image:url({{task.executor.profile.photo.url}});"></span>
+							{% else %}
+							<div class="symbol-label fs-3 bg-light-warning text-warning">
+							{{task.executor.first_name|upfirstletter}}</div>
+							{% endif %}
+						</div>
+						<!--end::Avatar-->
+						<div class="pe-5">
+							<!--begin::Author details-->
+							<div class="d-flex align-items-center flex-wrap gap-1">
+								<a href="{% url 'profile_view' task.executor.pk %}" class="fw-bolder text-dark text-hover-primary">{{task.executor.first_name}} {{task.executor.last_name}}</a>
+							</div>
+							<!--end::Author details-->
+							<!--begin::Message details-->
+							<div data-kt-inbox-message="details">
+								<span class="text-muted fw-bold">{{task.executor.profile.job_title}}</span>
+							</div>
+							<!--end::Message details-->
+						</div>
+					</div>
+				</div>
+				<div class="m-10 bg-body flex-grow-1">
+					<div class="fs-4 fw-bolder mb-5">Со-исполнители</div>
+					{% for co_executor in task.co_executor.all %}
+					<div class="d-flex align-items-center mb-5">
+						<!--begin::Avatar-->
+						<div class="symbol symbol-50 me-4">
+							{% if co_executor.profile.photo %}
+							<img alt="Pic" src="{{ co_executor.profile.photo.url }}">
+							{% else %}
+							<span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{co_executor.first_name|upfirstletter}}</span>
+							{% endif %}
+						</div>
+						<!--end::Avatar-->
+						<div class="pe-5">
+							<!--begin::Author details-->
+							<div class="d-flex align-items-center flex-wrap gap-1">
+								<a href="{% url 'profile_view' co_executor.pk%}">
+									<span class="fw-bolder text-dark text-hover-primary">{{co_executor.first_name}} {{co_executor.last_name}}</span>
+								</a>
+							</div>
+							<!--end::Author details-->
+							<!--begin::Message details-->
+							<div data-kt-inbox-message="details">
+								<span class="text-muted fw-bold">{{co_executor.profile.job_title}}</span>
+							</div>
+							<!--end::Message details-->
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				<div class="m-10 bg-body flex-grow-1">
+					<div class="fs-4 fw-bolder mb-5">Наблюдатели</div>
+					{% for viewers in task.viewers.all %}
+						<div class="d-flex align-items-center mb-5">
+							<!--begin::Avatar-->
+							<div class="symbol symbol-50 me-4">
+								{% if viewers.profile.photo %}
+								<img alt="Pic" src="{{ viewers.profile.photo.url }}">
+								{% else %}
+								<span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{viewers.first_name|upfirstletter}}</span>
+								{% endif %}
+							</div>
+							<!--end::Avatar-->
+							<div class="pe-5">
+								<!--begin::Author details-->
+								<div class="d-flex align-items-center flex-wrap gap-1">
+									<a href="{% url 'profile_view' viewers.pk%}"><span class="fw-bolder text-dark text-hover-primary">{{viewers.first_name}} {{viewers.last_name}}</span></a>
+								</div>
+								<!--end::Author details-->
+								<!--begin::Message details-->
+								<div data-kt-inbox-message="details">
+									<span class="text-muted fw-bold">{{viewers.profile.job_title}}</span>
+								</div>
+								<!--end::Message details-->
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+
+			</div>
+		</div>
+    </div>
+</div>
+{% endblock %}

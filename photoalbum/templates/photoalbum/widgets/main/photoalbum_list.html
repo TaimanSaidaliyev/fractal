@@ -1,0 +1,5 @@
+{% load photoalbum_tags %}
+{% for album in albums %}
+{% show_photoalbum_card album.pk %}
+{% empty %}
+{% endfor %}

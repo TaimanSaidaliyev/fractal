@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% block content %}
+<div class="card-body p-lg-10" >
+    {% if page_type == 'update_project' %}
+    <h1>Редактирование проекта - <a href="{% url 'projects_tasks_list' project_id %}" class="text-warning text-hover-primary">#{{project.pk}} {{project.title}}</a></h1>
+    <form action="{% url 'project_update' project_id %}" method="POST" enctype="multipart/form-data">
+    {% elif page_type == 'add_project'%}
+    <h1>Новый проект</h1>
+    <form action="{% url 'project_add' %}" method="POST" enctype="multipart/form-data">
+    {% endif %}
+    {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+{% endblock %}

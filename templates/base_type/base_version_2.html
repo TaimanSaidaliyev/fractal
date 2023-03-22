@@ -1,0 +1,61 @@
+{% load static %}
+{% load interface_parameters %}
+{% load alerts %}
+<html lang="ru">
+	<!--begin::Head-->
+	{% block header %}HEADER{% endblock %}
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed {% show_is_sidebar_top user.pk%}" style="--kt-toolbar-height:0px;--kt-toolbar-height-tablet-and-mobile:0px;background-image: url('{% show_background user.pk %}');background-size:cover;">
+		<!--begin::Main-->
+		<!--begin::Root-->
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="page d-flex flex-row flex-column-fluid">
+				<!--begin::Aside-->
+				{% block sidebar %}SIDEBAR{% endblock %}
+				<!--end::Aside-->
+				<!--begin::Wrapper-->
+				<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+					<!--begin::Header-->
+					{% include 'inc/_nav.html' %}
+					<!--end::Header-->
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid p-0" id="kt_content">
+						<!--begin::Toolbar-->
+						{% block toolbar %}TOOLBAR{% endblock %}
+						<!--end::Toolbar-->
+						<!--begin::Post-->
+						<div class="post d-flex flex-column-fluid" id="kt_post">
+							<!--begin::Container-->
+							<div class="bg-white" style="width: 100%; background: rgba(255,255,255,0.8);">
+								{% if success %}
+								{% show_alerts request.resolver_match.url_name %}
+								{% endif %}
+                                {% block content %}CONTENT{% endblock %}
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Post-->
+					</div>
+					<!--end::Content-->
+					<!--begin::Footer-->
+					{% block footer %}FOOTER{% endblock %}
+					<!--end::Footer-->
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+
+		{% include 'inc/_chat.html' %}
+		{% block chat %}{% endblock %}
+
+		{% include 'inc/_notifications.html' %}
+		{% block notifications %}{% endblock %}
+
+		{% include 'inc/_js_files.html' %}
+		{% block js_files %}{% endblock %}
+	</body>
+	<!--end::Body-->
+</html>

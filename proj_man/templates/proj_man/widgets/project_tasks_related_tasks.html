@@ -1,0 +1,95 @@
+<div class="pt-5">
+<span class="text-dark fs-4 me-3 fw-bolder">Связанные задачи ({{related_tasks_count}})</span>
+<span class="text text-primary cursor-pointer" data-bs-toggle="collapse" data-bs-target="#kt_accordion_2_item_2" aria-expanded="true">Редактировать</span>
+<table class="table table-row-dashed table-hover table-row-gray-300 align-middle gs-0 gy-2 mt-3">
+    <tbody>
+    {% for related_task in task.related_tasks.all %}
+    {% if task.pk != related_task.pk %}
+    <tr>
+    <td>
+        <div class="d-flex align-items-center">
+            <div class="d-flex justify-content-start flex-column">
+                <a href="{% url 'projects_task_detail' related_task.pk %}" class="{%if related_task.is_completed %}text-success text-hover-success {% else %}text-dark text-hover-primary {% endif %}fs-6" >
+                    {{ related_task.title }}
+                </a>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'projects_tasks_list' related_task.project.pk %}" class="text-dark text-hover-primary fs-6">{{related_task.project.title}}</a>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex justify-content-center">
+            <span class="{{related_task.priority.css_color}}">{{related_task.priority}}</span>
+        </div>
+    </td>
+    <td class="text-end">
+        <div class="d-flex justify-content-center">
+            {% if related_task.remind_me.is_coming == 0 %}
+            <span class="text-dark fs-6">{{related_task.edate}}</span>
+            {% elif related_task.remind_me.is_coming == 1 %}
+            <span class="fs-6 text text-warning" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="На грани просрочки">{{related_task.edate}}</span>
+            {% else %}
+            <span class="fs-6 text text-danger" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="Задача просрочена">{{related_task.edate}}</span>
+            {% endif %}
+        </div>
+    </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    {% for related_task in tasks_related.all %}
+    {% if task.pk != related_task.pk %}
+    <tr>
+    <td>
+        <div class="d-flex align-items-center">
+            <div class="d-flex justify-content-start flex-column">
+                <a href="{% url 'projects_task_detail' related_task.pk %}" class="{%if related_task.is_completed %}text-success text-hover-success {% else %}text-dark text-hover-primary {% endif %}fs-6" >
+                    {{ related_task.title }}
+                </a>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'projects_tasks_list' related_task.project.pk %}" class="text-dark text-hover-primary fs-6">{{related_task.project.title}}</a>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex justify-content-center">
+            <span class="{{related_task.priority.css_color}}">{{related_task.priority}}</span>
+        </div>
+    </td>
+    <td class="text-end">
+        <div class="d-flex justify-content-center">
+            {% if related_task.remind_me.is_coming == 0 %}
+            <span class="text-dark fs-6">{{related_task.edate}}</span>
+            {% elif related_task.remind_me.is_coming == 1 %}
+            <span class="fs-6 text text-warning" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="На грани просрочки">{{related_task.edate}}</span>
+            {% else %}
+            <span class="fs-6 text text-danger" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" data-bs-original-title="Задача просрочена">{{related_task.edate}}</span>
+            {% endif %}
+        </div>
+    </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+<div id="kt_accordion_2_item_2" class="accordion-collapse collapse bg-gray-100 p-5 rounded border border-1 border-gray-500" aria-labelledby="kt_accordion_2_header_2" data-bs-parent="#kt_accordion_2">
+    <form action="{% url 'add_related_tasks' task.pk %}" method="POST">
+        {% csrf_token %}
+        <div class="col col-lg-12">
+            <div class="form-group">
+                <label for="{{ form_related_tasks.related_tasks.id_for_label }}" class="mt-5">Связанные задачи</label>
+                {{ form_related_tasks.related_tasks }}
+                <div class="invalid-feedback">
+                    {{ form_related_tasks.related_tasks.errors }}
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-sm mt-5" type="submit">Сохранить</button>
+    </form>
+</div>
+</div>

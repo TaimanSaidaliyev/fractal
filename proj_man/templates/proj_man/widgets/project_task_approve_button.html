@@ -1,0 +1,110 @@
+{% load project_tags %}
+{% load common_files %}
+{% if author_notice_status_1 %}
+yes
+{% endif %}
+{% if status == 1 %}
+<a data-bs-toggle="modal" data-bs-target="#kt_modal_project_user_author_answer_form" class="btn btn-light-google btn-sm"
+data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Отправить на согласование">
+    Исполнить
+</a>
+<div class="modal fade" tabindex="-1" id="kt_modal_project_user_author_answer_form">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Форма ответа исполнителя</h3>
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-1"></span>
+                </div>
+                <!--end::Close-->
+            </div>
+            <div class="modal-body">
+                <span class="text mb-2">Вы можете указать комментарии по поводу исполнения задачи
+                    и прикрепить файл. Форма ответа будет направлена автору задачи и автор
+                    может увидеть ваши комментарии</span>
+                <div class="mt-4">
+                    <form method="post" action="{% url 'task_change_approve_status' task_id status %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        {{form_answer.media}}
+                        <div class="form-group mb-5">
+                            {{ form_answer.answer_description }}
+                            <div class="invalid-feedback">
+                                {{ form_answer.answer_description.errors }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group">
+                              <label for="{{ file_form.attached_file.id_for_label }}">{{file_form.attached_file.label}}</label>
+                                {{ file_form.attached_file }}
+                                <div class="invalid-feedback">
+                                    {{ file_form.attached_file.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-sm btn-primary">Отправить на согласование</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% elif status == 2 and author == True %}
+<div class="alert alert-warning border border-warning border-1" role="alert">
+    <div class="d-flex flex-wrap gap-2 justify-content-between ">
+        <div class="d-flex align-items-center flex-wrap gap-2">
+            Задача направлена на согласование
+        </div>
+        <div class="float-end">
+            <a href="{% url 'task_change_approve_status' task_id status %}" class="btn btn-success btn-sm">
+                Принять
+            </a>
+            <a href="{% url 'task_deny_approve_status' task_id status %}" class="btn btn-danger btn-sm">
+                Отклонить
+            </a>
+        </div>
+  </div>
+</div>
+{% elif status == 2 and executor == True %}
+<div class="alert alert-warning border border-warning border-1" role="alert">
+    <div class="d-flex flex-wrap gap-2 justify-content-between ">
+        <div class="d-flex align-items-center flex-wrap gap-2">
+            Вы отправили задачу на согласование автору задачи. В скором времени вам придет уведомлении об изменении статуса.
+        </div>
+  </div>
+</div>
+{% elif status == 3 %}
+<div class="alert alert-success" role="alert">
+    <div class="d-flex flex-wrap gap-2 justify-content-between">
+        <div class="d-flex align-items-center flex-wrap gap-2">
+            Задача закрыта
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if type == 'answer' and is_answer_exist %}
+<span class="text-dark fs-4 fw-bolder">Комментарий исполнения</span>
+<div class="py-3">
+    <div class="d-flex pt-6" style="margin-left: 0px">
+        <div class="symbol symbol-45px me-5">
+            {% if answer.author.profile.photo %}
+            <img src="{{answer.author.profile.photo.url}}" alt="">
+            {% else %}
+            <span class="symbol-label bg-primary text-inverse-primary fw-bolder">{{answer.author.first_name|upfirstletter}}</span>
+            {% endif %}
+        </div>
+        <div class="d-flex flex-column flex-row-fluid">
+            <div class="d-flex align-items-center flex-wrap mb-0">
+                <a href="{% url 'profile_view' answer.author.pk %}" class="text-gray-800 text-hover-primary fw-bolder me-6">{{answer.author.first_name}} {{answer.author.last_name}}</a>
+                <span class="text-gray-400 fw-semibold fs-7 me-5">{{answer.updated_at}}</span>
+            </div>
+            <span class="text-gray-800 fs-7 fw-normal pt-1">{% autoescape off %}{{answer.answer_description}}{% endautoescape %}</span>
+        </div>
+    </div>
+</div>
+{% show_module_record_files_list_small request action.pk %}
+{% endif %}

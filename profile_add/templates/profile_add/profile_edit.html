@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ news_item.title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+  {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load news_tags %}
+{% load sidebar_last_news %}
+{% load news_widgets %}
+{% load alerts %}
+{% block content %}
+{% load static %}
+      <!--begin::Post card-->
+      <div class="card card-docs flex-row-fluid mb-2">
+          {% if updated %}
+            {% show_alerts request.resolver_match.url_name %}
+          {% endif %}
+          <div class="rounded border p-10">
+          <h2 class="text-center mb-5">Анкетные данные {{ user_data.first_name }} {{user_data.last_name}}</h2>
+          <a href="{% url 'profile_view' user_data.pk %}"><h5 class="text-center mb-5 text-primary">Перейти в профиль</h5></a>
+          <form method="post" action="{% url 'profile_edit' user_data.pk %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row g-10">
+                    <div class="col-md-4">
+                        <label for="basic-url" class="form-label">Ваше имя</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                <span class="svg-icon svg-icon-1">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z" fill="currentColor"></path>
+                                        <path d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z" fill="currentColor"></path>
+                                        <rect x="7" y="6" width="4" height="4" rx="2" fill="currentColor"></rect>
+                                    </svg>
+                                </span>
+                            </span>
+                            {{user_form.first_name}}
+                        </div>
+                        <label for="basic-url" class="form-label">Ваша фамилия</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                <span class="svg-icon svg-icon-1">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z" fill="currentColor"></path>
+                                        <path d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z" fill="currentColor"></path>
+                                        <rect x="7" y="6" width="4" height="4" rx="2" fill="currentColor"></rect>
+                                    </svg>
+                                </span>
+                            </span>
+                            {{user_form.last_name}}
+                        </div>
+                        <label for="basic-url" class="form-label">Отчество</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                <span class="svg-icon svg-icon-1">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z" fill="currentColor"></path>
+                                        <path d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z" fill="currentColor"></path>
+                                        <rect x="7" y="6" width="4" height="4" rx="2" fill="currentColor"></rect>
+                                    </svg>
+                                </span>
+                            </span>
+                            {{profile_form.fathers_name}}
+                        </div>
+                        <label for="basic-url" class="form-label">Дата рождения</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.birth_date}}
+                        </div>
+                        <label for="basic-url" class="form-label">Пол</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.gender}}
+                        </div>
+                        <label for="basic-url" class="form-label">ИИН</label>
+                        <div class="input-group mb-5">
+                        <span class="input-group-text">🆔</span>
+                            {{profile_form.person_id}}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="basic-url" class="form-label">Ваша почта</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                @
+                            </span>
+                            {{user_form.email}}
+                        </div>
+                        <label for="basic-url" class="form-label">Телефон</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                📞
+                            </span>
+                            {{profile_form.telephone}}
+                        </div>
+                        <label for="basic-url" class="form-label">Рабочий телефон</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                ☎
+                            </span>
+                            {{profile_form.telephone_job}}
+                        </div>
+                        <label for="basic-url" class="form-label">Адрес-веб</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                http://
+                            </span>
+                            {{profile_form.website}}
+                        </div>
+                        <label for="basic-url" class="form-label">Образование</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                🎓
+                            </span>
+                            {{profile_form.education}}
+                        </div>
+                        <label for="basic-url" class="form-label">Местонахождение</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                🗺
+                            </span>
+                            {{profile_form.location}}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="basic-url" class="form-label">Приступил к работе</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.start_date}}
+                        </div>
+                        <label for="basic-url" class="form-label">Компания</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.company}}
+                        </div>
+                        <label for="basic-url" class="form-label">Департамент</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.department}}
+                        </div>
+                        <label for="basic-url" class="form-label">Должность</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.job_title}}
+                        </div>
+                        <label for="basic-url" class="form-label">Статус</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.status}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-10">
+                    <div class="col-md-3">
+                        <label for="basic-url" class="form-label">Skype</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                @
+                            </span>
+                            {{profile_form.skype}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="basic-url" class="form-label">Instagram</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                @
+                            </span>
+                            {{profile_form.instagram}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="basic-url" class="form-label">Linkedin</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                @
+                            </span>
+                            {{profile_form.linkedin}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="basic-url" class="form-label">Facebook</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">
+                                @
+                            </span>
+                            {{profile_form.facebook}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-10">
+                    <div class="col-md-6">
+                        <label for="basic-url" class="form-label">Сертификаты</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.certificate}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="basic-url" class="form-label">Награды</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.honor}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-10">
+                    <div class="col-md-6">
+                        <label for="basic-url" class="form-label">Цитата для блога</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.quote}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="basic-url" class="form-label">Биография</label>
+                        <div class="input-group mb-5">
+                            {{profile_form.bio}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {{profile_form.photo}}
+                </div>
+                <div class="d-flex flex-center flex-column mb-5">
+                    <button class="btn btn-primary text-center mt-10" type="submit" action="{% url 'profile' %}">Сохранить изменения</button>
+                </div>
+          </form>
+          </div>
+      </div>
+{% endblock %}

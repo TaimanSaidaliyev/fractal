@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}::{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'inc/_footer.html' %}
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block toolbar%}
+    {% include 'inc/_toolbar.html' %}
+{% endblock %}
+
+{% load project_tags %}
+{% load static %}
+{% load photoalbum_tags %}
+{% block content %}
+<form action="{% url 'photoalbum_items_edit_mode' photoalbum.pk %}" method="POST">
+<div class="p-10">
+    <div class="row">
+        <span class="text-primary fw-bolder mb-5">
+            <a href="{% url 'photoalbum_items' photoalbum.pk %}">< Фотоальбом: {{photoalbum.title}}</a>
+        </span>
+        {% csrf_token %}
+        {% show_photoalbum_items_header photoalbum.pk %}
+        {% for image in photoalbum_items %}
+        <div class="col-md-4 col-sm-6 col-xxl-3">
+            <div class="card card-flush h-xl-100 pb-10">
+                <div class="ribbon ribbon-top card-rounded bgi-no-repeat bgi-position-center bgi-size-cover" style="height: 200px;background-image:url('{{image.image_thumbnail_300_200.url}}')">
+                    <div style="padding: 5px;">
+                        <div class="form-check form-check-custom form-check-solid form-check-sm">
+                            <input class="form-check-input" name="items" type="checkbox" value="{{image.pk}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="d-flex flex-wrap gap-2 justify-content-md-center">
+            <div class="d-flex flex-stack fs-4 text-center">
+                <a href="{% url 'photoalbum_items' photoalbum.pk %}" class="btn btn-sm btn-light me-3">Отмена</a>
+                <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}

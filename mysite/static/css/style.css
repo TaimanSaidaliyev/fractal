@@ -1,0 +1,11 @@
+.errorlist{
+    color: red;
+}
+
+.django-ckeditor-widget{
+    width: 100%!important;
+}
+
+.body{
+    background: #ffffff;
+}
