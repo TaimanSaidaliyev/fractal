@@ -2,6 +2,7 @@ from django import forms
 from .models import Tasks, UserSelfCategoryDictionary, TimeTracking, Project, TaskAnswerByExecutors, Status
 from django.forms import formset_factory
 
+
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Tasks

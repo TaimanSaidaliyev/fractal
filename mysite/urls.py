@@ -3,10 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from .view import error_404
-from news.views import *
 from django.conf import settings
 from django.conf.urls.static import static
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,7 +20,7 @@ urlpatterns = [
     path('proj_man/', include('proj_man.urls')),
     path('common/', include('common.urls')),
     path('404', error_404, name='error_404'),
-    path('photoalbum/', include('photoalbum.urls'), name='photoalbum')
+    path('photoalbum/', include('photoalbum.urls'), name='photoalbum'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
